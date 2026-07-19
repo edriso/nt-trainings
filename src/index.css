@@ -21,6 +21,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   @apply bg-white text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-200;
 }

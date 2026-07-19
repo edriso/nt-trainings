@@ -1,4 +1,5 @@
 import { Link, Outlet, ScrollRestoration } from 'react-router'
+import { BackToTop } from './BackToTop'
 import { GitHubIcon } from './GitHubIcon'
 import { ThemeToggle } from './ThemeToggle'
 
@@ -40,6 +41,7 @@ export function Layout() {
         </p>
       </footer>
 
+      <BackToTop />
       <ScrollRestoration />
     </div>
   )
