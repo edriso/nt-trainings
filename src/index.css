@@ -1,0 +1,98 @@
+@import 'tailwindcss';
+
+/*
+ * Dark mode is controlled by a `dark` class on the <html> element.
+ * See src/hooks/useTheme.ts for the toggle logic.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand accent color (teal). Change these two lines to re-color the whole site. */
+  --color-accent: oklch(0.6 0.11 183);
+  --color-accent-strong: oklch(0.51 0.1 183);
+
+  /* System fonts only — this site practices the performance tips it teaches. */
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-200;
+}
+
+/*
+ * Styles for lesson content rendered from Markdown.
+ * Everything inside <article class="prose"> gets these styles.
+ */
+.prose {
+  @apply text-[1.05rem] leading-relaxed;
+}
+
+.prose h2 {
+  @apply mt-12 mb-4 scroll-mt-24 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50;
+}
+
+.prose h3 {
+  @apply mt-8 mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-50;
+}
+
+.prose p {
+  @apply my-4;
+}
+
+.prose a {
+  @apply font-medium text-accent-strong underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent dark:text-accent;
+}
+
+.prose strong {
+  @apply font-semibold text-zinc-900 dark:text-zinc-50;
+}
+
+.prose ul {
+  @apply my-4 list-disc space-y-2 pl-6;
+}
+
+.prose ol {
+  @apply my-4 list-decimal space-y-2 pl-6;
+}
+
+.prose blockquote {
+  @apply my-6 rounded-r-lg border-l-4 border-accent bg-zinc-50 px-5 py-3 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300;
+}
+
+.prose blockquote p {
+  @apply my-1;
+}
+
+.prose code {
+  @apply rounded bg-zinc-100 px-1.5 py-0.5 font-mono text-[0.9em] text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200;
+}
+
+.prose pre {
+  @apply my-6 overflow-x-auto rounded-xl bg-zinc-900 p-4 text-sm text-zinc-100 dark:bg-zinc-900 dark:ring-1 dark:ring-zinc-800;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+
+.prose table {
+  @apply my-6 w-full border-collapse text-sm;
+}
+
+.prose th {
+  @apply border-b-2 border-zinc-200 px-3 py-2 text-left font-semibold text-zinc-900 dark:border-zinc-700 dark:text-zinc-50;
+}
+
+.prose td {
+  @apply border-b border-zinc-100 px-3 py-2 align-top dark:border-zinc-800;
+}
+
+.prose hr {
+  @apply my-10 border-zinc-200 dark:border-zinc-800;
+}
