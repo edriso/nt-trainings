@@ -6,13 +6,12 @@ import { ArrowUp, X } from 'lucide-react'
  * - only appears after the user scrolls about two screens down
  * - bottom-right corner, does not cover the reading column
  * - a real <button> with a text label (icon-only is too ambiguous)
- * - the small ✕ hides it for the rest of the tab session
+ * - the small ✕ hides it for the current page view only; a refresh or the
+ *   next visit brings it back (a hidden control with no un-hide is a trap)
  */
 export function BackToTop() {
   const [visible, setVisible] = useState(false)
-  const [dismissed, setDismissed] = useState(
-    () => sessionStorage.getItem('back-to-top-dismissed') === 'true',
-  )
+  const [dismissed, setDismissed] = useState(false)
 
   useEffect(() => {
     if (dismissed) return
@@ -41,7 +40,6 @@ export function BackToTop() {
   }
 
   function dismiss() {
-    sessionStorage.setItem('back-to-top-dismissed', 'true')
     setDismissed(true)
   }
 
