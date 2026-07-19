@@ -9,8 +9,8 @@ topic together (performance, SEO, A/B testing, AI, …) and write it down as a s
 junior-friendly lesson. The audience is junior-to-mid developers reading in their
 second language — clarity beats cleverness, always.
 
-- **Live site:** https://edriso.github.io/notambourine-trainings/
-- **Repo:** https://github.com/edriso/notambourine-trainings
+- **Live site:** https://edriso.github.io/nt-trainings/
+- **Repo:** https://github.com/edriso/nt-trainings
 
 ## Commands
 
@@ -45,7 +45,7 @@ Key decisions (do not undo them casually):
   (`--color-accent`) — change it there to re-brand the whole site.
 - **Dark mode** is a `dark` class on `<html>`, set by an inline script in
   `index.html` (prevents theme flash) and toggled by `src/hooks/useTheme.ts`.
-- **GitHub Pages** serves the site under `/notambourine-trainings/`. That path is
+- **GitHub Pages** serves the site under `/nt-trainings/`. That path is
   set as `base` in `vite.config.ts` and flows into the router via
   `import.meta.env.BASE_URL`. The build copies `index.html` to `404.html` so deep
   links work on Pages.

@@ -2,7 +2,7 @@ import { Link, Outlet, ScrollRestoration } from 'react-router'
 import { GitHubIcon } from './GitHubIcon'
 import { ThemeToggle } from './ThemeToggle'
 
-const REPO_URL = 'https://github.com/edriso/notambourine-trainings'
+const REPO_URL = 'https://github.com/edriso/nt-trainings'
 
 export function Layout() {
   return (

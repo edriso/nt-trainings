@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Served from https://edriso.github.io/notambourine-trainings/
-  base: '/notambourine-trainings/',
+  // Served from https://edriso.github.io/nt-trainings/
+  base: '/nt-trainings/',
   plugins: [react(), tailwindcss()],
 })

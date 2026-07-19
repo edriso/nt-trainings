@@ -2,7 +2,7 @@
 
 Topics we learn together as a team to become better developers.
 
-**Live site:** https://edriso.github.io/notambourine-trainings/
+**Live site:** https://edriso.github.io/nt-trainings/
 
 Every training session we pick a topic (performance, SEO, A/B testing, AI, …),
 learn it together, and write it down here in simple English so anyone on the team
