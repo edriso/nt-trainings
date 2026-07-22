@@ -2,7 +2,7 @@
 title: AI for Developers — Claude GOAT
 description: Our full guide to mastering Claude, Claude Code, and Agent Skills lives on its own site. Click to open it.
 emoji: 🤖
-order: 4
+order: 5
 status: learned
 tags: [ai, claude, claude-code, agent-skills]
 external: https://edriso.github.io/claude-goat/
