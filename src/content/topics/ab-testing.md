@@ -2,7 +2,7 @@
 title: A/B Testing & CRO
 description: How teams test ideas on real users instead of guessing — and how devs build and read those tests.
 emoji: 🧪
-order: 4
+order: 5
 status: learned
 session: 3
 date: 2026-07-22
