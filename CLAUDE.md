@@ -32,7 +32,7 @@ shell that renders them.
 src/
   content/topics/*.md   ← THE CONTENT. One file = one topic. Add a file, done.
   lib/topics.ts         ← loads all topic files at build time, parses frontmatter (yaml)
-  components/           ← Layout, TopicCard, Markdown renderer, VideoEmbed, ResourceList
+  components/           ← Layout, TopicCard, Markdown renderer, VideoEmbed, ResourceList, DeckList
   pages/                ← Home (topic grid), TopicPage (lesson), NotFound
   index.css             ← Tailwind v4 theme tokens + .prose styles for lesson Markdown
   main.tsx              ← routes (TopicPage is lazy-loaded to keep the home bundle small)
@@ -78,6 +78,10 @@ resources:           # optional: link cards at the end under "Go deeper"
   - title: Resource Name
     url: https://…
     note: One short line saying why this link is worth clicking.
+decks:               # optional: PDF cards under "Slides" (files live in public/decks/)
+  - title: Deck Name (Month Year)
+    file: file-name.pdf
+    note: One short line on what it adds — and how dated it is.
 ---
 ```
 
@@ -96,8 +100,8 @@ Follow this shape (see `web-performance.md` for the reference example):
    work (a workflow, a checklist, or a tool table with "use it when…").
 4. **End with `## Try it yourself`** — 2–4 numbered, concrete exercises the reader
    can do in under 15 minutes, always the last Markdown section.
-5. Videos and resources go in **frontmatter**, not in the body — the site renders
-   them as "Watch" and "Go deeper" sections automatically.
+5. Videos, resources, and decks go in **frontmatter**, not in the body — the site
+   renders them as "Watch", "Go deeper", and "Slides" sections automatically.
 
 ### Writing style rules
 
@@ -122,6 +126,13 @@ Follow this shape (see `web-performance.md` for the reference example):
 - Content shared from client/PE-firm decks is often **confidential** — never
   commit those files to this public repo. Extract the general, public knowledge
   and link public resources instead.
+- **Decks in `public/decks/` must be a public-safe edition.** Our own team-time
+  slides are fine to publish, but only after client codenames, real repo paths,
+  internal constant names, and CI workflow filenames are swapped for generic
+  ones. Sanitise the HTML source, regenerate the PDF from *that* file, and check
+  the result with `pdftotext deck.pdf - | grep -i <client name>` before
+  committing. The unedited deck goes only to the private
+  [trainings](https://github.com/notambourine/trainings) repo.
 
 ## Git conventions
 

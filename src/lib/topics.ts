@@ -15,6 +15,15 @@ export type TopicResource = {
   note?: string
 }
 
+/** A PDF deck shown in the "Slides" section of a lesson. */
+export type TopicDeck = {
+  title: string
+  /** File name inside public/decks/, e.g. "unit-testing-2026-07.pdf" */
+  file: string
+  /** One short line saying what the deck adds (and how dated it is). */
+  note?: string
+}
+
 /** The metadata at the top of each lesson file (the YAML frontmatter). */
 export type TopicMeta = {
   title: string
@@ -33,6 +42,8 @@ export type TopicMeta = {
   external?: string
   videos?: TopicVideo[]
   resources?: TopicResource[]
+  /** PDF decks (in public/decks/) rendered as a "Slides" section. */
+  decks?: TopicDeck[]
 }
 
 export type Topic = TopicMeta & {

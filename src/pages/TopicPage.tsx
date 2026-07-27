@@ -1,5 +1,6 @@
-import { ArrowLeft, BookOpen, CalendarDays, PlayCircle } from 'lucide-react'
+import { ArrowLeft, BookOpen, CalendarDays, PlayCircle, Presentation } from 'lucide-react'
 import { Link, useParams } from 'react-router'
+import { DeckList } from '../components/DeckList'
 import { Markdown } from '../components/Markdown'
 import { ResourceList } from '../components/ResourceList'
 import { VideoEmbed } from '../components/VideoEmbed'
@@ -43,6 +44,18 @@ export function TopicPage() {
       </header>
 
       <Markdown>{topic.content}</Markdown>
+
+      {topic.decks && topic.decks.length > 0 && (
+        <section className="mt-12">
+          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            <Presentation size={22} className="text-accent" />
+            Slides
+          </h2>
+          <div className="mt-4">
+            <DeckList decks={topic.decks} />
+          </div>
+        </section>
+      )}
 
       {topic.videos && topic.videos.length > 0 && (
         <section className="mt-12">
