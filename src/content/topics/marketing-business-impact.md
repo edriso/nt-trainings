@@ -2,7 +2,7 @@
 title: Marketing & Business Impact
 description: Where the money comes from, what marketing channels cost, and how to tie dev work to business results.
 emoji: 📣
-order: 8
+order: 9
 status: up-next
 tags: [marketing, attribution, business]
 resources:

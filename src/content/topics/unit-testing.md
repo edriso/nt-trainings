@@ -264,7 +264,7 @@ it('does not email a customer without an address', async () => {
 - **The more you fake, the less you prove.** A test where everything is faked
   only tests your fakes. If you find yourself faking four things to test one
   function, that is the signal to write an integration test instead — which is
-  exactly the layer Sara's session covers.
+  exactly the layer [Integration Testing](integration-testing) covers.
 
 ## Should we write the test first? (TDD)
 
@@ -353,10 +353,11 @@ file per unit — `src/utils/formatPrice.js` gets `tests/utils/formatPrice.test.
 
 Unit tests are the base of the pyramid: there are many of them, they are cheap,
 and they run in milliseconds. Climbing up, each layer proves more about the real
-experience but costs more and breaks more often. See the **Code Testing & the
-Testing Pyramid** topic for the shape of the whole suite — the next sessions
-carry on up: Sara takes **integration** testing, John takes **regression**
-testing.
+experience but costs more and breaks more often. See
+[Code Testing & the Testing Pyramid](code-testing) for the shape of the whole
+suite. The series carries on up from here: [Integration Testing](integration-testing)
+is the next layer (Sara, session 6), and **regression** testing follows it
+(John, session 7).
 
 ## Try it yourself
 

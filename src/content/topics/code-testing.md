@@ -2,7 +2,7 @@
 title: Code Testing & the Testing Pyramid
 description: Unit, integration, component, and end-to-end tests — what each one is for, and how much of each to write.
 emoji: ✅
-order: 10
+order: 11
 status: up-next
 tags: [testing, quality, ci]
 resources:
@@ -40,29 +40,39 @@ write.
 
 | Layer | What it checks | Session |
 | --- | --- | --- |
-| **Unit** | One function on its own. Tiny, fast, run in the thousands | ✅ Covered — see the **Unit Testing** topic (Mohamed, session 5) |
-| **Integration** | A few pieces working together, e.g. a form calling a fake API. Often the best confidence per line of test | Next — Sara |
+| **Unit** | One function on its own. Tiny, fast, run in the thousands | ✅ [Unit Testing](unit-testing) (Mohamed, session 5) |
+| **Integration** | A few pieces working together — a route and its real database, or a form and a fake API. Often the best confidence per line of test | ✅ [Integration Testing](integration-testing) (Sara, session 6) |
+| **Regression** | Confirming the features that already worked still work after a change | Next — John, session 7 |
 | **Component** | A UI component rendered and clicked the way a user would | Planned |
-| **End-to-end (E2E)** | A real browser driving the whole app, like a robot user going through checkout. Slow and precious; keep them few | Planned |
-| **Regression** | Confirming the features that already worked still work after a change | Planned — John |
+| **End-to-end (E2E)** | A real browser driving the whole app, like a robot user going through checkout. Slow and precious; keep them few | Planned — where Playwright fits is answered in [Integration Testing](integration-testing) |
+| **Smoke** | The two-minute "is it alive at all" check straight after a deploy | Planned — see also [Maintaining Live Sites](maintaining-live-sites) |
 
 The trade-off the pyramid captures: as you climb, tests get **slower, costlier,
 and flakier**, but each one proves *more* about the real experience.
 
+The layers are not the whole strategy, either. Two things sit outside the
+pyramid and catch what it cannot: **types and linting** underneath it (a
+compile error is the cheapest possible test), and **error monitoring** above it,
+because production is where you find the bugs nobody thought to test for.
+
 ## The argument we still have to settle
 
-Two things came up in the unit-testing session that this lesson has to answer
-properly:
+Three things are still open once we finish climbing:
 
-1. **How much of each layer?** Kent C. Dodds' "testing trophy" argues front-end
-   teams should lean on **integration** tests over unit tests, because that is
-   where the confidence per hour spent is highest. The classic pyramid says the
-   base should be widest. We will land on something that fits client work.
+1. **How much of each layer, for our kind of work?** Both sides are written up
+   in [Integration Testing](integration-testing) — Google's roughly 80/15/5
+   pyramid against Kent C. Dodds' "testing trophy", which argues front-end teams
+   get the most confidence per hour from integration tests. Neither is wrong; the
+   mix depends on whether your risk sits in logic or in wiring. What we still owe
+   ourselves is a default for a *new client project* on day one.
 2. **Test first, or test after?** The team split on test-driven development: it
    removes guesswork when the requirement is already known, and it duplicates
    effort when the ticket is still ambiguous — which most of ours are. The
-   working compromise is written up in the **Unit Testing** lesson; the strategy
-   version belongs here.
+   working compromise is in [Unit Testing](unit-testing); the strategy version
+   belongs here.
+3. **What blocks a merge?** Tests existing and tests *gating* are different
+   decisions. Which checks are required, which are advisory, and what happens on
+   a red suite at 5pm on a Friday.
 
 ## Until the session
 
