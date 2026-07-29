@@ -2,7 +2,7 @@
 title: Ways of Working
 description: Grooming, discovery, spikes, PR reviews and release rhythm — the shared vocabulary a team needs to stop talking past each other.
 emoji: 🧭
-order: 13
+order: 15
 status: up-next
 tags: [process, agile, code-review]
 resources:
@@ -100,6 +100,41 @@ The research backs the instinct, and it points at PR *size* as the real lever:
 Corollary worth saying out loud: if a review comment needs three paragraphs, the
 problem is usually not the comment. Either the change is too big, or the
 conversation belongs in a call.
+
+## How specific should a ticket be?
+
+Session 7 added the other half of this, and it is a deliberate position rather than
+a preference. Sara said that as she writes tickets she wants to get better at the
+exact requirements, and asked everyone to push back whenever one is unclear. Tom's
+answer went the other way:
+
+> **A ticket should carry the intent and the constraints. The plan is the
+> implementer's to make.**
+
+His reasoning: AI-assisted ticket writing has been useful in some ways and "way too
+specific on the requirements" in others. The failure mode is a ticket that reads
+like a specification — *write this file this way* — which quietly moves a technical
+decision away from the person with the code in front of them. So the direction of
+travel is **deliberately less specific**: link the design, attach the screenshot,
+state the outcome, and leave the approach to whoever picks it up.
+
+| A ticket must have | A ticket should not have |
+| --- | --- |
+| A link to the design, where one exists | A file-by-file implementation plan |
+| A screenshot of the current state | Invented acceptance criteria nobody agreed with the client |
+| The outcome we want, and any hard constraint | A guess at the approach, stated as a requirement |
+
+Two things make this work rather than just being under-specification:
+
+**Ambiguity has to be answerable.** "Reach out if anything is unclear" is only a
+real offer if asking is fast and costs nothing socially. That is the actual
+mechanism, and it is the part worth protecting.
+
+**Looser tickets raise the value of review.** With less written down, a reviewer is
+the main place a misunderstanding gets caught — which connects this directly to the
+small-PR section above. It also means "ready" cannot be defined as *the plan is
+written*, since a good ticket now deliberately leaves the plan open. That definition
+is one of the open questions below.
 
 ## Release rhythm
 

@@ -501,6 +501,12 @@ Practical read for our stack: **push the decisions out of Liquid and into
 functions or the app**, and the testable surface grows without anyone writing a
 browser test.
 
+Session 7 took this further and it is worth following up on:
+[Regression Testing](regression-testing) covers the researched answer to "how do
+you unit-test Liquid?" (short version — you do not, you move the logic out), plus
+the fixture-driven pattern for testing the compiled WebAssembly, and why testing
+the *binary* rather than the source is the point.
+
 ## Common mistakes
 
 - **Mocking so much that only the mocks are tested.** If the database, the auth

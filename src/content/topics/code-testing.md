@@ -2,7 +2,7 @@
 title: Code Testing & the Testing Pyramid
 description: Unit, integration, component, and end-to-end tests — what each one is for, and how much of each to write.
 emoji: ✅
-order: 11
+order: 13
 status: up-next
 tags: [testing, quality, ci]
 resources:
@@ -42,10 +42,10 @@ write.
 | --- | --- | --- |
 | **Unit** | One function on its own. Tiny, fast, run in the thousands | ✅ [Unit Testing](unit-testing) (Mohamed, session 5) |
 | **Integration** | A few pieces working together — a route and its real database, or a form and a fake API. Often the best confidence per line of test | ✅ [Integration Testing](integration-testing) (Sara, session 6) |
-| **Regression** | Confirming the features that already worked still work after a change | Next — John, session 7 |
+| **Regression** | Confirming the features that already worked still work after a change | ✅ [Regression Testing](regression-testing) (John, session 7) |
+| **End-to-end (E2E)** | A real browser driving the whole app, like a robot user going through checkout. Slow and precious; keep them few | Next — Andrej, see [End-to-End Testing](end-to-end-testing) |
 | **Component** | A UI component rendered and clicked the way a user would | Planned |
-| **End-to-end (E2E)** | A real browser driving the whole app, like a robot user going through checkout. Slow and precious; keep them few | Planned — where Playwright fits is answered in [Integration Testing](integration-testing) |
-| **Smoke** | The two-minute "is it alive at all" check straight after a deploy | Planned — see also [Maintaining Live Sites](maintaining-live-sites) |
+| **Smoke** | The "is it alive at all" check straight after a deploy | Partly covered in [Regression Testing](regression-testing) — see also [Maintaining Live Sites](maintaining-live-sites) |
 
 The trade-off the pyramid captures: as you climb, tests get **slower, costlier,
 and flakier**, but each one proves *more* about the real experience.
@@ -54,6 +54,21 @@ The layers are not the whole strategy, either. Two things sit outside the
 pyramid and catch what it cannot: **types and linting** underneath it (a
 compile error is the cheapest possible test), and **error monitoring** above it,
 because production is where you find the bugs nobody thought to test for.
+
+## One thing the layers list gets wrong
+
+Worth flagging on the map itself, because it is the confusion the sessions kept
+running into: the six rows above are not all the same kind of thing.
+
+- **Unit, integration, component and E2E** are levels of **scope** — how much of
+  the system is real when the test runs.
+- **Regression and smoke** are statements of **intent** — why you are running it
+  this time.
+
+They are two axes, not one list. A single test file is routinely a unit test by
+scope *and* a regression test by intent, which is why "is this an integration
+test?" never had a clean answer. Session 7 worked this out; the full argument is in
+[Regression Testing](regression-testing).
 
 ## The argument we still have to settle
 

@@ -2,7 +2,7 @@
 title: Maintaining Live Sites
 description: What changes once a site is live — monitoring, safe deploys, and catching regressions before clients do.
 emoji: 🔧
-order: 10
+order: 12
 status: up-next
 tags: [maintenance, monitoring, deploys]
 resources:
@@ -15,6 +15,12 @@ resources:
   - title: Rage clicks — Sentry docs
     url: https://docs.sentry.io/product/issues/issue-details/replay-issues/rage-clicks/
     note: A user clicking the same thing three times in seven seconds is a bug report nobody had to file.
+  - title: Source maps — Sentry docs
+    url: https://docs.sentry.io/platforms/javascript/sourcemaps/
+    note: The step that turns a useless minified stack trace into a real file and line. Skipping it wastes the whole tool.
+  - title: "Test automation — DORA capabilities"
+    url: https://dora.dev/capabilities/test-automation/
+    note: The research behind "deploy more often, break things less". The capabilities are what make it true, not the calendar.
 ---
 
 ## Why this topic is coming up
@@ -45,6 +51,43 @@ when things get *slowly* worse — you have to notice it yourself.
   signed off on Friday. Boring, and it prevents the worst kind of surprise.
 - **The boring-but-vital stuff** — app and dependency updates, broken-link
   checks, and keeping tracking working after theme changes.
+
+## Two things session 7 settled
+
+**Merging is not releasing.** The rule worth adopting deliberately: a merge to the
+main branch publishes to a **staging** environment automatically, and a production
+release is a separate, explicit act — a tag push, not a branch push. The mechanism
+matters as much as the intention. If the release path accepts a branch, "we froze
+staging" is a promise everyone has to remember rather than something the pipeline
+enforces. Two details that catch people out:
+
+- **A release from a branch should be rejected outright**, and the tagged commit
+  checked to confirm it descends from the main branch — otherwise a side branch can
+  be tagged into production.
+- **After a merge, preview the staging environment, not production.** Once a merge
+  no longer reaches production, checking the live site after merging shows you the
+  *previous* release. This one bites everybody once.
+
+**Error monitoring is the half that makes frequent releases safe.** The
+[research on delivery performance](https://dora.dev/capabilities/test-automation/)
+finds that speed and stability go together rather than trading off — but the teams
+that get both have the capabilities that produce it, including the ability to see
+what broke. So the honest version of "can we deploy on Friday?" is: *can you see
+what broke, and can you put it back?* Tests answer neither question once the code
+is live.
+
+Two things to get right when setting error monitoring up, because both are easy to
+skip and both decide whether the tool is useful:
+
+1. **Upload source maps.** Minified production JavaScript produces stack traces
+   like `t is not a function at a.js:1:48211`, which tell you nothing. The
+   monitoring tool needs the
+   [source maps](https://docs.sentry.io/platforms/javascript/sourcemaps/) from the
+   production build to map that back to a real file and line. It is a build step,
+   not a settings toggle.
+2. **Tie every error to the release.** If releases are tags, feed the tag through.
+   That turns *"errors went up"* into *"errors went up on this release"*, which is
+   the difference between an investigation and a rollback.
 
 ## Until the session
 

@@ -356,8 +356,9 @@ and they run in milliseconds. Climbing up, each layer proves more about the real
 experience but costs more and breaks more often. See
 [Code Testing & the Testing Pyramid](code-testing) for the shape of the whole
 suite. The series carries on up from here: [Integration Testing](integration-testing)
-is the next layer (Sara, session 6), and **regression** testing follows it
-(John, session 7).
+is the next layer (Sara, session 6), then
+[Regression Testing](regression-testing) (John, session 7), and
+[End-to-End Testing](end-to-end-testing) after that (Andrej).
 
 ## Try it yourself
 
