@@ -260,6 +260,16 @@ PostHog and GA4 have similar alert rules.
 
 Most junior developers' first apps never need paid tiers. Start free, upgrade when you have real data.
 
+## Using Error Tracking to Guide Debugging
+
+Error trackers give you visibility, but **[Debugging Slow Server Responses](debugging-slow-responses)** teaches you the systematic method for finding the root cause when metrics look normal.
+
+When you combine the two:
+- **Error tracking** tells you *that* something is wrong (and alerts you fast)
+- **Systematic debugging** shows you *why* it's wrong (and how to fix it)
+
+For example, if Sentry shows "response time spike" but CPU and RAM look fine, the [USE Method](debugging-slow-responses) helps you find whether the bottleneck is a query lock, connection pool exhaustion, or an external API timeout—things error dashboards alone won't reveal.
+
 ## Try It Yourself
 
 ### Exercise 1: Set Up Error Tracking on a Small React App

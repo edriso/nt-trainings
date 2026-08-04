@@ -222,6 +222,19 @@ export default {
 6. **After deploy:** hard refresh in your own browser (`Ctrl+Shift+R` / `Cmd+Shift+R`) to verify
 7. **Monitor:** watch your error logs for 5 minutes; spike in 404s or type errors means stale code is running
 
+## Before you deploy: Test in production-like conditions
+
+The most important rule: **always run tests before deploying to production.** This includes:
+
+- **Lint and type-check:** `npm run lint && npm run build` (catches obvious errors)
+- **Automated tests:** Unit, integration, and E2E tests should pass
+- **Manual smoke test:** If your app is critical, test the golden path manually in a staging environment
+- **Check for stale code:** After deploy, clear your browser cache (`Ctrl+Shift+R`) and verify the new code loaded
+
+This is especially important after shipping cache changes—a misconfigured `Cache-Control` header or forgotten hash can silently serve broken code to users.
+
+When something does go wrong, [Debugging Slow Server Responses](debugging-slow-responses) teaches the systematic approach to finding whether the issue is cache-related, infrastructure, or code.
+
 ## Try it yourself
 
 **Exercise 1: Check your current cache headers**
