@@ -82,22 +82,13 @@ roughly 30 to 100 lines — leave **short, concrete review comments**, because a
 long essay on a tiny change costs more to read and resolve than the change cost
 to write.
 
-The research backs the instinct, and it points at PR *size* as the real lever:
+That instinct turned out to be the whole of session 12, with the research behind
+it, so it now has its own lesson: **[Code Review](code-review)** covers what a
+review is actually for, the sizes at which reviews stop working, how to label a
+comment so it does not block by accident, and what to do instead of a comment
+round.
 
-- **Google's guidance:** around 100 lines is a reasonable change, 1,000 lines is
-  usually too large, and if a review is so big that you cannot see when you will
-  get to it, the right response is to ask for it to be
-  [split into smaller changes](https://google.github.io/eng-practices/review/developer/small-cls.html).
-- **The Cisco/SmartBear study:** review no more than **200–400 lines at a time**
-  — past that, the ability to find defects drops off. A 200–400 line review over
-  60–90 minutes finds roughly **70–90%** of the defects that are there.
-- **Speed is part of quality too.** Google treats
-  [review latency](https://google.github.io/eng-practices/review/reviewer/speed.html)
-  as a first-class metric: slow reviews do not just delay one branch, they push
-  the whole team towards bigger batches, which review worse. Small PR, fast
-  reply, short comment — the three reinforce each other.
-
-Corollary worth saying out loud: if a review comment needs three paragraphs, the
+The one line to keep here: if a review comment needs three paragraphs, the
 problem is usually not the comment. Either the change is too big, or the
 conversation belongs in a call.
 
@@ -135,6 +126,46 @@ the main place a misunderstanding gets caught — which connects this directly t
 small-PR section above. It also means "ready" cannot be defined as *the plan is
 written*, since a good ticket now deliberately leaves the plan open. That definition
 is one of the open questions below.
+
+## Session 12: the template is the mechanism
+
+Session 7 settled *what* a ticket should carry. Session 12 answered the obvious
+next question — how do you make that happen every time, when the person writing
+the ticket is in a hurry and has an AI assistant open?
+
+Tom's answer was not "remind people". It was: **Claude is very good at
+mimicking.** So give it something to mimic. A GitHub issue template in the repo,
+plus a skill that points at the template, gets the ticket shape for free on every
+issue, from every person, without anyone remembering a house rule.
+
+The failure mode being designed out is specific, and everyone in the session
+recognised it:
+
+1. You type two sentences that carry the real intent.
+2. The model expands them into a page and a half of requirements — file names,
+   acceptance criteria, an approach — none of which anyone agreed with the client.
+3. Weeks pass. Most of that page is now wrong.
+4. The two true sentences are still in there somewhere, buried.
+
+> **Generated requirements rot. Intent does not.** That is the whole argument for
+> the short ticket.
+
+The standard that works in practice is about two sentences per ticket — enough
+for a person *or* a model to expand at the moment of work rather than weeks
+before it. Expansion is cheap and can be redone with current information. A page
+written in advance can only go stale.
+
+The mechanics, since this is the part people ask about:
+
+- Templates live in **`.github/ISSUE_TEMPLATE/`** on the default branch. A `.md`
+  file is a free-text starting point; a `.yml` **issue form** renders real form
+  fields and can mark them required.
+  ([GitHub docs](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates))
+- **The skill points at the template; it does not restate it.** Two copies of the
+  same rules drift, and the model follows whichever one it read last.
+
+The same thinking applies on the other end of the ticket, where a generated page
+lands in a review comment instead of an issue: see [Code Review](code-review).
 
 ## Release rhythm
 

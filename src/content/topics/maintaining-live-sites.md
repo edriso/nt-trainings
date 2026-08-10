@@ -89,6 +89,78 @@ skip and both decide whether the tool is useful:
    That turns *"errors went up"* into *"errors went up on this release"*, which is
    the difference between an investigation and a rollback.
 
+## What session 12 added: the cutover you cannot rehearse
+
+Everything above assumes the deploy is ours. Some are not. A platform migration
+signed off by the client means the store or the account transfers to somebody
+else's ownership — and the moment it does, the agency loses access until it is
+reconfigured. The realistic estimate in our case: expect 500 errors on merges to
+the main branch for 24 to 48 hours, flying blind. Nobody picks that timing. It
+lands when the contract lands.
+
+A cutover owned by a third party cannot be rehearsed and cannot be rolled back,
+so the levers are different from a normal deploy:
+
+| Normal deploy | Third-party cutover |
+| --- | --- |
+| Test on staging first | There is no staging for someone else's ownership transfer |
+| Roll back if it breaks | You wait for the other side |
+| Deploy when it is ready | It happens when the contract lands |
+| Alert on errors | **Announce the errors in advance**, so they are not an incident |
+
+That last row is the one people skip and it is the cheapest. During an announced
+window, a 500 is expected output. During an unannounced one, three engineers
+independently start debugging the same known outage, which is the actual cost.
+
+Two more levers that cost nothing:
+
+**Hold back the piece nobody can QA yet.** The same week, a CDN change carried a
+set of crawler-facing files across but deliberately left one page out, because
+that page has an account-creation flow nobody had walked through. Ship what you
+can verify; park what you cannot. The A/B test on that page waits a week and
+loses nothing.
+
+**Choose the hour.** The switch went out once the client's team had gone to sleep.
+Not because it was expected to break — because if it did, the people who would
+page us were not watching. Timing is a free lever on any change whose blast
+radius you cannot fully predict.
+
+## Migrating data: import everything, decide later
+
+The more transferable decision from the same session, and it comes up on every
+store transfer.
+
+The question was narrow: a batch of products exists only in the old platform's
+export, not on the live store. Import them as **drafts** so the storefront does
+not change, or **live** so they behave like real products? And the follow-up: with
+roughly 18,000 products per store, many of them disabled in the old system, do
+those come across at all?
+
+The decision was **import everything, and import it live.** The reasoning is a
+cost comparison rather than a preference, and it is worth being able to
+reconstruct:
+
+1. **Draft products hide the bug you are trying to find.** The point of importing
+   early was to QA the storefront against real products. A draft that never
+   renders a product page proves nothing.
+2. **Deleting is cheaper than enumerating.** Getting a definitive keep-or-drop
+   list for 18,000 products out of a client costs more, and blocks, than the
+   client opening the admin after handover and disabling what they no longer
+   sell. Five minutes of their time against days of ours.
+3. **Only one data source was actually trustworthy.** One store had good data; the
+   rest had drifted. Deciding store by store what is "correct" is a research
+   project. Importing and pruning is not.
+
+The detail that makes all of this safe is the one to check before copying the
+pattern anywhere else: **the import has to be idempotent.** A later run must update
+the existing records rather than creating duplicates, so a too-generous import is
+recoverable and a disable-script can follow later. If a re-import created a second
+copy of every product, the whole decision flips and you import conservatively
+instead.
+
+> **In a migration, make the reversible choice, and check that it really is
+> reversible before you rely on it.**
+
 ## Until the session
 
 1. Pick a live site you work on and run the ten-minute GA4 orientation from the [analytics lesson](google-analytics-4).

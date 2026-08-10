@@ -379,6 +379,11 @@ what a fresh pair of eyes is for — and our answer to it is pull-request review
 rather than a QA stage. Worth checking honestly in a few months whether review is
 actually catching the things a separate QA pass would.
 
+Session 12 came back to exactly that, and sharpened it: if the review is a
+relayed AI comment nobody read, then a team like this has neither a QA step nor a
+fresh pair of eyes. [Code Review](code-review) is where that argument, and what we
+decided to do about it, is written down.
+
 ## Can you really deploy on Friday?
 
 John's aside — with a regression suite you can *"deploy on Friday without having
