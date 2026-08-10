@@ -60,7 +60,10 @@ real thing, which is user experience.
 Why should we care as devs?
 
 - **Faster sites sell more.** Slow pages lose visitors before they see anything.
-- **Google cares.** Core Web Vitals feed into SEO ranking and paid-ads quality scores.
+- **Google cares — in both channels.** Core Web Vitals feed into organic Search
+  ranking, and speed is part of the "landing page experience" that makes paid ads
+  cheaper per click. One fix, two budgets — the mechanism is spelled out in
+  [Marketing & Business Impact](marketing-business-impact).
 - **It is our job.** Clients often buy "performance work" — we need to know what to fix and what to say no to.
 
 ## Two ways to measure speed

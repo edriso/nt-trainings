@@ -15,6 +15,13 @@ tags: [tools, seo, migration]
 
 When you move a site, restructure URLs, or change domains, you risk losing years of search rankings, user trust (broken links), and traffic. But most developers don't see these problems until weeks after launch when users start complaining or analytics drop. Screaming Frog and similar tools let you find and fix these issues *during* testing, not after going live.
 
+**Where this fits.** This lesson is the *migration* playbook — crawl before, crawl
+after, prove nothing broke. For the ongoing side of the same job — what 301 vs 302
+actually signals to Google, how one `robots.txt` line can hide a whole content
+type, what crawl budget really is, and the monthly spot-check worth doing on a
+live site — read
+[Technical SEO Hygiene & Crawl Budget](technical-seo-hygiene).
+
 ## What is SEO monitoring?
 
 SEO monitoring means watching your site the way Google does: crawling every page, checking links, reading titles and metadata, verifying redirects work. Most migrations fail not because of bad content, but because:
