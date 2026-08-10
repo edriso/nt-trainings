@@ -2,7 +2,7 @@
 title: 20% Time & Experimentation
 description: Allocating dedicated time to learning and experimentation—Google model applied to web development
 emoji: 🧪
-order: 16
+order: 11
 status: learned
 session: 9
 date: 2026-08-04

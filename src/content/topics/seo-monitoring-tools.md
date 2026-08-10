@@ -2,7 +2,7 @@
 title: SEO Monitoring & Screaming Frog
 description: Tools for tracking SEO health, migrations, and redirects across large site updates
 emoji: 🐸
-order: 19
+order: 14
 status: learned
 session: 9
 date: 2026-08-04

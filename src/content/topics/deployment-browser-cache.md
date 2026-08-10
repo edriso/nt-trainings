@@ -2,7 +2,7 @@
 title: Handling Browser Cache During Deployments
 description: Infrastructure solutions for preventing 500 errors when browsers serve stale code after deploys
 emoji: ⚡
-order: 18
+order: 13
 status: learned
 session: 9
 date: 2026-08-04

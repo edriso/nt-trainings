@@ -2,7 +2,7 @@
 title: Code Review
 description: What a pull request review is really for, and how to leave feedback that a person actually wrote.
 emoji: 👀
-order: 20
+order: 19
 status: learned
 session: 12
 date: 2026-08-10
@@ -115,15 +115,36 @@ layer between a model and another human.
 
 Three reasons it fails, and they stack:
 
-1. **Nothing was added.** The reader has the same model you do. If your
-   contribution is the copy and the paste, you can be skipped.
+1. **Nothing was added.** The reader has the same model you do, and would rather
+   drive it themselves. In Gruhn's words: *"I can talk to Claude myself. It's
+   going to be faster and I get to control the context."* If your contribution is
+   the copy and the paste, you can be skipped.
 2. **The cost moved to them.** Generating a page takes seconds; reading a page
-   takes minutes. AI text is long, confident, jargon-dense, and wrong in a few
-   places you have not marked. You saved five minutes and spent fifteen of
+   takes minutes. AI text is long, confident, wrong in a few places you have not
+   marked, and increasingly jargon-dense. Gruhn's example, which he had to look up
+   almost word by word: *"NATS control-plane events: stream leader election / R3
+   quorum re-form during pod churn."* You saved five minutes and spent fifteen of
    someone else's.
 3. **The review never happened.** The whole point was a second brain. A relay is
    not a second brain, and now the pull request carries a green check that means
    nothing.
+
+**And it runs the other way too.** Tom shared the original post after the session,
+and its sharpest paragraph is not about reviewers at all. It is about authors:
+
+> Shipping *some* code can be done with close to zero effort now: Copy/paste the
+> ticket description into Claude Code. Don't look at the code or read what Claude
+> has written. If there's any feedback from reviewers, copy/paste that into Claude
+> Code as well. If necessary, iterate.
+>
+> That works. But who has done the implementation? **The reviewers did, using
+> Claude Code, and you as a meat proxy.**
+
+That is the version worth watching for in yourself, because it does not feel like
+relaying anything. It feels like shipping. The tell is simple: **if you cannot
+answer a question about your own diff without going back to the model**, the
+review is not a second opinion on your work. It *is* the work, and it has quietly
+moved onto somebody else's plate.
 
 That second cost has been measured. In a September 2025 study of 1,150 US
 full-time workers by BetterUp Labs and Stanford's Social Media Lab, around 40%

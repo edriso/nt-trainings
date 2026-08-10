@@ -2,7 +2,7 @@
 title: Error Tracking & Analytics Tools
 description: Choosing error tracking solutions—PostHog, Google Analytics, Sentry for web applications
 emoji: 🔍
-order: 17
+order: 12
 status: learned
 session: 9
 date: 2026-08-04

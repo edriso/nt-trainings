@@ -2,7 +2,7 @@
 title: Debugging Slow Server Responses
 description: A systematic approach to finding root causes when CPU, RAM, and database metrics all look normal.
 emoji: 🔍
-order: 14
+order: 15
 status: learned
 session: 10
 date: 2026-08-04
