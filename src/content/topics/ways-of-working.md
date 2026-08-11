@@ -2,7 +2,7 @@
 title: Ways of Working
 description: Grooming, discovery, spikes, PR reviews and release rhythm — the shared vocabulary a team needs to stop talking past each other.
 emoji: 🧭
-order: 21
+order: 22
 status: up-next
 tags: [process, agile, code-review]
 resources:
@@ -166,6 +166,54 @@ The mechanics, since this is the part people ask about:
 
 The same thinking applies on the other end of the ticket, where a generated page
 lands in a review comment instead of an issue: see [Code Review](code-review).
+
+## Session 13: which meetings earn their place
+
+One of the open questions on this card — *which of these rituals do we actually
+want* — got answered live in session 13, and the answer is worth recording
+because it came out **different for two projects on the same morning.**
+
+Tom noticed one project had no weekly grooming and roadmap review on the
+calendar and proposed one: 30 minutes, straight after the daily standup, weekly.
+Two stated purposes, and the second is the interesting half — internal alignment,
+*and* rehearsal for having the same conversation with the client.
+
+Then he asked the identical question about a second project and got the opposite
+answer. Mohamed's response was that the team already does it: he, John and Andrej
+were meeting that same day to go over yesterday, today and tomorrow, with QA
+readiness targeted for the end of the week. Tom's conclusion was to leave it
+alone, see how the first project's version lands, and add a per-client weekly
+only if one turns out to be needed.
+
+> **A meeting earns its place by covering something no existing meeting covers.**
+
+That is the rule this card was looking for. Three jobs, three cadences:
+
+| Meeting | The question it answers | Cadence |
+| --- | --- | --- |
+| **Standup** | What is happening today, and who is blocked? | Daily |
+| **Roadmap review / refinement** | Are we about to work on the right things, and is the backlog ready to pull from? | Weekly |
+| **Retro** | What should we change about *how* we work? | Per milestone |
+
+The two failure modes are opposites, and both are common. Either standup swells
+to cover refinement — fifteen minutes becomes forty and nobody actually refined
+anything — or a weekly gets added that just repeats standup to the same people.
+Tom's framing of what standup is *for* is a fair test for the first one: go person
+by person and see **who is blocked and who is resourced on what**. Capacity and
+blockers, not a progress report.
+
+Two smaller things from the same conversation:
+
+**A retro and a catch-up sweep are not the same meeting.** The Friday retro
+Mohamed proposed had two jobs — review how the milestone went, and finalise
+anything still missing. Both are worth doing; they just pull in opposite
+directions, because a retro that turns into a status sweep stops producing
+process changes. If you need both, time-box them separately inside the one slot.
+
+**Running the client conversation internally first is the cheapest rehearsal
+there is.** That was Tom's second reason for the weekly, and it generalises: any
+meeting you are nervous about, hold a smaller version of it with your own team
+first.
 
 ## Release rhythm
 
