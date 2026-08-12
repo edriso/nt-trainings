@@ -2,7 +2,7 @@
 title: Maintaining Live Sites
 description: What changes once a site is live — monitoring, safe deploys, and catching regressions before clients do.
 emoji: 🔧
-order: 23
+order: 27
 status: up-next
 tags: [maintenance, monitoring, deploys]
 resources:

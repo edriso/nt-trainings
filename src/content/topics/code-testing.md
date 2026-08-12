@@ -2,7 +2,7 @@
 title: Code Testing & the Testing Pyramid
 description: Unit, integration, component, and end-to-end tests — what each one is for, and how much of each to write.
 emoji: ✅
-order: 21
+order: 25
 status: up-next
 tags: [testing, quality, ci]
 resources:

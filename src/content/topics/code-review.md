@@ -364,7 +364,9 @@ that landed.
 on documentation Markdown, so anyone can push docs without waiting on an approval.
 Hooks stay gated on purpose: a hook is code that runs automatically on a
 teammate's machine, and repo worms have been going around. Prose that is wrong
-gets fixed in a follow-up; a hook that is wrong runs everywhere.
+gets fixed in a follow-up; a hook that is wrong runs everywhere. The worms in
+question, and what they actually did, are written up in
+[Supply Chain Security](supply-chain-security).
 
 **Check which repo before you raise it — and raise it anyway.** Sara spotted
 commits landing directly on a `master` branch and flagged it. It turned out to be
