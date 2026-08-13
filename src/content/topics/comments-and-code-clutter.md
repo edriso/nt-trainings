@@ -31,6 +31,12 @@ resources:
   - title: "comment tag — Shopify Liquid reference"
     url: https://shopify.dev/docs/api/liquid/tags/comment
     note: Two lines that tell you which of your template comments reach the browser and which never do.
+  - title: "Modern Web Guidance (Chrome & Edge teams)"
+    url: https://github.com/googlechrome/modern-web-guidance
+    note: The one Mohamed was trying to find. Steers coding agents toward current platform features instead of the legacy patterns they default to.
+  - title: "Create plugins — Claude Code docs"
+    url: https://code.claude.com/docs/en/plugins
+    note: Where a shared skill should end up. Read the table at the top for when a plugin beats a .claude/ folder.
   - title: "Optional chaining (?.) — MDN"
     url: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining
     note: The operator that deletes most of the redundant guards in this lesson. Check browser support at the bottom of the page.
@@ -73,6 +79,41 @@ and gives you nothing, because the frame moved or the pull request merged six
 weeks ago.
 
 A comment that points somewhere else is a promise the code cannot keep.
+
+### The one-line test, and the trap inside it
+
+Sara's *mad boring* skill turns all of the above into a single question, and it is
+the sharpest sentence anyone has written on this:
+
+> **Does this comment state a constraint the code cannot show? Provenance is not
+> rationale — where a value came from never explains why the code is shaped this
+> way.**
+
+That second half is the part worth memorising. `// Figma node 4821:19` and
+`// see the ticket` *feel* like justification, which is exactly why they survive
+review. They are not. They record where somebody got a number, not why the number
+has to be that number, and only the second thing is still true next year.
+
+The trap is deleting too enthusiastically, so the rubric has a tie-breaker:
+
+| What you found | What to do |
+| --- | --- |
+| Citation, and nothing survives removing it | Delete the whole comment |
+| Citation **wrapped around a real constraint** | Delete the citation, **keep the constraint**, rewrite it in present tense |
+| A literal value that deliberately breaks a repo rule | Keep it, just shorten it. That comment is defending the exception |
+
+Row two is the one people get wrong in both directions. *"Per Figma 4821: this
+must stay 40px because the pill collapses below that"* is not scaffolding with a
+constraint attached — it is a **constraint with scaffolding attached**. Cut the
+node ID, keep the sentence about the pill.
+
+And a second piece of nuance that generalises well beyond our repos: **give
+yourself more latitude in files you did not write.** In a vendor file you have
+patched, a comment explaining why you deviate from the upstream version is
+load-bearing, because the next person will otherwise "fix" it back. In your own
+files the same comment has to clear the normal bar. The comment is earning its
+place by marking a divergence, and there is no divergence to mark in a file that
+is entirely yours.
 
 ## The argument that was never settled
 
@@ -218,6 +259,23 @@ belong in the author's loop. A check that only ever fires at review time is a
 check we chose to run at the most expensive possible moment — the same argument
 as in [Code Review](code-review), and it applies to your own tooling too.
 
+**Two design decisions in *mad boring* are worth copying into any cleanup tool
+you build.** Both are about not being trusted with more than you asked for:
+
+1. **Scope to the diff.** It audits only comment lines *added on the branch*, and
+   never touches pre-existing ones. Without that rule, "clean up the comments"
+   quietly becomes a 400-file diff nobody can review, and the one real change is
+   buried in it.
+2. **Report before applying.** It prints the findings as a table and waits. You
+   read a list of proposed deletions in a few seconds; you cannot meaningfully
+   review the same information as a diff across thirty files. It only edits when
+   you say so.
+
+It also caps decision notes at one or two lines and pushes the reasoning into the
+commit or pull request instead. That is the right place for it — the rationale
+for a decision belongs where the decision was made, and it stops the file
+accumulating essays.
+
 **Vet the skill before you trust it.** John's warning deserves repeating as-is:
 *"a lot of times I've run into skills online and they promise heaven, and when I
 use them they're just… it works, but it has some side effect that is usually not
@@ -241,6 +299,35 @@ the *next* project on day one, so the mistakes we found do not get made again
 from scratch. That is the only version of "documenting best practices" that has
 ever worked — not a document about the past, but the starting configuration of
 the next thing.
+
+## Comments are one symptom, not the whole problem
+
+Sara's framing was deliberately wider than comments: *"usually harmless code, but
+sometimes Claude likes to do things in a silly way. Comments especially are
+getting out of hand."* Comments are just the most visible instance. The other one
+costs more and is quieter: **code written the way it was written in 2015.**
+
+A model trained on years of the public web has seen far more of the old way than
+the new one, so left alone it reaches for the pattern with the most examples
+behind it. A hand-rolled dropdown instead of `<dialog>` or the Popover API.
+A `ResizeObserver` and thirty lines of JavaScript for something container queries
+do in three lines of CSS. A debounce utility instead of `scroll-timeline`. None of
+it is *wrong*, and every line of it is code we now own, test and carry.
+
+Everything above is about deleting what the tool over-produced. This is the other
+half, and it is the cheaper one: **give it the modern baseline up front.** Mohamed
+found the resource that does exactly that —
+[Modern Web Guidance](https://github.com/googlechrome/modern-web-guidance),
+maintained by the Chrome and Edge teams. It is a skill collection whose entire
+purpose is steering coding agents toward current platform features instead of
+legacy workarounds, and it ships browser-support data and fallbacks with each one,
+so "modern" does not quietly mean "broken on Safari".
+
+Worth being clear about what it is and is not. It is *not* a comment tool and it
+will not help with any of the rubric above. It is the answer to a different
+question: not "why did it write so much?" but "why did it write it like that?"
+And it is the same argument as everything else on this page — the cheapest place
+to fix output is upstream of producing it.
 
 ## What we are changing
 
@@ -292,6 +379,36 @@ appear until one of them is on
 Shared skills arrive read-only. The Gist works fine in the meantime; a repo-
 committed `.claude/skills/` directory works better, because it is versioned and
 it follows the project.
+
+**And the direction we landed on is a plugin.** Tom's answer to Sara sharing the
+Gist was *"I will try to see if we can do a shared plugin + all contribute to
+it"*, and that is the right end state rather than a nicer version of a Gist.
+Anthropic's own guidance draws the line in the same place: a `.claude/` directory
+is for personal and project-specific work, and a **plugin** is for "sharing with
+teammates, versioned releases, reusable across projects"
+([docs](https://code.claude.com/docs/en/plugins)). Concretely, that gets us four
+things a Gist cannot:
+
+- **One install, every repo.** A skill in one project's `.claude/` helps only the
+  people working in that project. A plugin follows you into every project.
+- **Versions.** Bump the manifest and everyone picks up the change. A Gist has no
+  way to tell you it moved.
+- **Contribution by pull request**, which is what "all contribute to it" needs.
+  Skills stop being personal artefacts and get reviewed like code.
+- **It can stay private.** A plugin marketplace can be hosted in a private
+  repository, so none of this has to be public to be shared.
+
+Migrating is mostly copying: the manifest goes in `.claude-plugin/plugin.json`,
+and `skills/`, `agents/` and `hooks/` sit at the plugin root next to it, *not*
+inside `.claude-plugin/`. Hooks move out of `settings.json` into
+`hooks/hooks.json`. Test it with `claude --plugin-dir ./our-plugin` before
+anyone installs anything. The mechanics are written up in
+[Claude GOAT](https://edriso.github.io/claude-goat/docs/skills-reference).
+
+One consequence to expect, because it surprises people: **plugin skills are
+namespaced.** A `mad-boring` skill installed from a plugin called `team-tools` is
+`/team-tools:mad-boring`, not `/mad-boring`. That is deliberate, so two plugins
+can both ship a `review` skill.
 
 **Then we ran the same check on our own skills.** Sara has five shared from her
 claude.ai account — `eod-update`, `pm-daily`, `weekly-dev-recap`, `shipped` and
