@@ -253,10 +253,32 @@ you are next in one of those files, delete them as you pass.
 **The skills that already exist on this team.** Sara wrote *mad boring* (trims
 extra Figma comments, holds decision notes to two lines) two days before this
 session and has been running it on recent pull requests. John has *scrub
-comments*, built on the senior-dev test above. Mohamed found a best-practices
-skill with a lot of stars but had not verified it yet — which is exactly the
-snake-oil case, so it stays unverified until someone reads it. Sara's plan is to
-distribute *mad boring* as a GitHub Gist plus the shared repo.
+comments*, built on the senior-dev test above. Sara's plan is to distribute *mad
+boring* as a GitHub Gist plus the shared repo.
+
+**We ran the snake-oil check on the starred repo.** The one Mohamed found is
+[claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice),
+and the result is a good demonstration of why John's rule is worth the two
+minutes. On the outside it is about as safe as an unofficial repo gets: MIT
+licence, tens of thousands of stars, pushed the same week, no install step, no
+setup script. It is also not really a best-practices *skill* — it is a large
+catalogue of workflows, agents, hooks and skills to browse, which is genuinely
+useful for that.
+
+The finding is in `.claude/settings.json`, where the permission allowlist starts
+with `Edit(*)`, `Write(*)`, `Bash(*)` and `WebFetch(domain:*)`. That is not a
+trap — it is a demo repo, and those settings make its own demos run without
+prompts. But `.claude/` is precisely the folder people copy wholesale out of a
+repo like this, and dropping that file into a real project turns off the approval
+prompt for every shell command and every file write. John's sentence, exactly:
+*it works, but it has some side effect that is usually not good.*
+
+**So the rule we are taking from it: read the settings before the skills.** A
+skill you dislike costs you one session. A permissions file you did not read
+changes what every future session may do without asking. Take the file you came
+for, not the folder it lives in. The longer version, plus what to look for in
+`.mcp.json` and `.claude/hooks/`, is in
+[Claude GOAT](https://edriso.github.io/claude-goat/docs/skills-craft).
 
 **Why nobody could see a shared Skills tab.** This came up live and went
 unanswered: Sara has skills on claude.ai, everyone else looked under Customize →
