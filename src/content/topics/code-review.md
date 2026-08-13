@@ -242,6 +242,12 @@ expensive moment. If your review is a skill you kick off, commit the skill. Then
 the author runs it before opening the PR, and your review goes back to being the
 thing only a person can do.
 
+Three sessions later this came back from the other direction: John started reading
+the diffs himself instead of letting a tool go first, and found comment noise and
+redundant guards taking up half the change. Which parts of that are worth a
+comment, and which are worth deleting on sight, is
+[Comments & Code Clutter](comments-and-code-clutter).
+
 ## How to write the comment
 
 Google publishes its internal review guidance, and it is the best short reading on

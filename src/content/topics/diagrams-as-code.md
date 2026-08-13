@@ -2,7 +2,7 @@
 title: Diagrams as Code
 description: Explaining a system to a client without opening a design tool — and keeping the diagram true six months later.
 emoji: 📐
-order: 24
+order: 26
 status: up-next
 tags: [documentation, diagrams, communication]
 resources:

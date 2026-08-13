@@ -280,6 +280,15 @@ docs, while keeping hooks gated — because a hook is code that runs on a
 teammate's machine automatically. Same instinct as everything above. Prose that
 is wrong gets fixed in a follow-up; code that runs unattended does not.
 
+**The same question applies to a skill you found online.** John's version of it in
+session 15: *"a lot of times I've run into skills online and they promise heaven,
+and when I use them they're just… it works, but it has some side effect that is
+usually not good."* A skill is a Markdown file, so reading it before you trust it
+costs two minutes — and the thing to look for is not bad advice, it is whether it
+installs, fetches or runs anything. That is a dependency wearing a different hat.
+More on the review side of it in
+[Comments & Code Clutter](comments-and-code-clutter).
+
 ## Try it yourself
 
 1. **Find out what a fresh install would run.** In any project, run
