@@ -293,6 +293,59 @@ Shared skills arrive read-only. The Gist works fine in the meantime; a repo-
 committed `.claude/skills/` directory works better, because it is versioned and
 it follows the project.
 
+**Then we ran the same check on our own skills.** Sara has five shared from her
+claude.ai account — `eod-update`, `pm-daily`, `weekly-dev-recap`, `shipped` and
+`amend` — and they turned out to be the better worked example, precisely because
+they are good skills and the findings are still real. All five are clean on the
+dimension that actually hurts people: no installs, no fetches, no bundled
+scripts, no MCP servers. Just `git`, `gh` and `date`. Two things came out of
+reading them anyway.
+
+**`allowed-tools` is the contract. The description is not.** Three of the five
+allow `Bash(gh api:*)` while stating in prose that they never post anything. Both
+statements are true, and only one of them is enforced: `gh api -X POST` and
+`gh api -X DELETE` sit inside that grant. Nothing here is going to post anything,
+because the instructions are clear and they get followed. But a permission is
+what the harness allows *when the instructions are not followed*, which is the
+entire reason it is a separate field. Narrow it to the calls you actually make,
+or drop `gh api` and take the prompt.
+
+**A check that fails quietly is worse than one that fails.** `weekly-dev-recap`
+and `pm-daily` build their date window with `date -v-7d`. That is the BSD form:
+it works on macOS and does not exist on Linux. Watch what happens on a Linux
+machine:
+
+```bash
+$ date -v-7d +%Y-%m-%d
+date: invalid option -- 'v'
+
+$ gh pr list --state merged --search "merged:>" --json number --limit 5
+[]                                   # exit code 0
+```
+
+The search string collapses to `merged:>`, `gh` returns an empty list, and it
+returns it *successfully* — so the skill's own
+`|| echo "gh CLI not configured"` fallback never fires. The recap does not
+error. It reports that nothing shipped. Run against this repo over a week with
+five merged pull requests, it would have said zero.
+
+`date -d '7 days ago' +%F` is the GNU form, and
+`date -d '7 days ago' +%F 2>/dev/null || date -v-7d +%F` covers both. The
+transferable part is the shape, not the fix: **anything in a skill's context
+block runs on somebody else's machine.** Make it portable, and make it loud when
+it breaks. An empty result and a broken command look identical in a report, and
+the report is the thing going to a client.
+
+**Credit where it is due.** `amend` is the design to copy. It is the only one of
+the five that writes anything, and it is the most carefully guarded: it checks
+whether the previous commit is already pushed and stops if it is, scans for
+`.env` and `*.pem` before staging, refuses `--no-verify`, and explicitly forbids
+itself every git command it does not need. And `shipped` is the best-commented
+file on this team, in exactly the way the top of this lesson argues for. *"A
+search commit cited issue #361 while the actual PR was #458 — trust the SHA
+search over the inline number"* is load-bearing. Nobody would ever reconstruct it
+from the code, and deleting it would cost the next person an afternoon.
+
 **The AI half of this lives elsewhere.** How to make the tool produce less of
 this in the first place, how to vet a skill, and how to run a review in a fresh
 context are all in [Claude GOAT](https://edriso.github.io/claude-goat/), same
