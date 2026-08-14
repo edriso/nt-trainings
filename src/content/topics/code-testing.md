@@ -2,7 +2,7 @@
 title: Code Testing & the Testing Pyramid
 description: Unit, integration, component, and end-to-end tests — what each one is for, and how much of each to write.
 emoji: ✅
-order: 27
+order: 28
 status: up-next
 tags: [testing, quality, ci]
 resources:
@@ -88,6 +88,14 @@ Three things are still open once we finish climbing:
 3. **What blocks a merge?** Tests existing and tests *gating* are different
    decisions. Which checks are required, which are advisory, and what happens on
    a red suite at 5pm on a Friday.
+
+One axis that is *not* still open, and that cuts across every row of the table:
+Bach and Bolton split the word *testing* itself. **Checking** is verifying a
+proposition that can be true or false — a machine does that better than you, on
+every push. **Testing** is exploring to find the propositions nobody wrote down,
+and only a person does that at all. Every layer above is a place to put checks;
+none of them replaces the looking-around part. The split, and what it means for
+what goes in a pull request, is in [Proving It Works](proving-it-works).
 
 ## Until the session
 

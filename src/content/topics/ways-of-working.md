@@ -2,7 +2,7 @@
 title: Ways of Working
 description: Grooming, discovery, spikes, PR reviews and release rhythm — the shared vocabulary a team needs to stop talking past each other.
 emoji: 🧭
-order: 28
+order: 29
 status: up-next
 tags: [process, agile, code-review]
 resources:

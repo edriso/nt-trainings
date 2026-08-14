@@ -360,6 +360,11 @@ instead of re-running what you ran.
 at the person: *"John built this component — John, can you look at the database
 part specifically?"* A targeted ask gets a real review. "PTAL" gets a rubber stamp.
 
+The session after this one turned this section into its own lesson: what the
+template should contain, which of those checks a machine should have run already,
+and why a screenshot without a build stamp proves nothing. That is
+[Proving It Works](proving-it-works).
+
 Both of these are the same move as writing a two-sentence ticket instead of a
 generated page of requirements — see [Ways of Working](ways-of-working) for where
 that landed.

@@ -279,6 +279,58 @@ Take headless when you want one design system across content and commerce, or
 when the vendor theme is genuinely capping the site. Not because APIs feel
 tidier.
 
+## What does not belong in the CMS at all
+
+Two sessions later Sara asked the practical version of this, about the legal
+pages: *"those pages that are /pages, those are from the CMS — do we need to be
+pulling them dynamically, or do we just hardcode that copy?"* The answer was the
+team decision of that session, and it is shorter than the question:
+
+> "We're hard coding everything that we can on this one. Nothing comes from the
+> CMS other than the blog stuff."
+
+That is not a shortcut, and it is worth knowing why, because "it is content, so
+it goes in the CMS" is the default everyone reaches for.
+
+**A CMS earns its place when someone who is not a developer edits that page,
+repeatedly, and can find where.** All three conditions, or it is costing more
+than it returns. Run the legal pages through them:
+
+| Condition | Blog post | Privacy policy / terms |
+| --- | --- | --- |
+| Edited by someone who is not a developer | Yes, constantly | Almost never — it comes from a lawyer |
+| Edited often | Weekly | Once or twice a year |
+| The editor can find the edit box | Yes, it is their tool | **No.** They log a ticket in chat instead |
+
+That third row was the real evidence. The legal copy was already technically
+editable in the platform, and what actually happened was: *"somebody logs a ticket
+in Slack anyway, because they can't find the place to edit it."* A CMS nobody can
+navigate is not a content system, it is a slower deploy with a login page.
+
+There is a second reason that is specific to legal pages and easy to miss. If
+your consent flow ever has to be defended, **you have to be able to show which
+version of the notice the user was shown.** GDPR Article 7(1) puts the burden on
+you: *"the controller shall be able to demonstrate that the data subject has
+consented"* ([Art. 7 GDPR](https://gdpr-info.eu/art-7-gdpr/)). A page in git has
+that for free — every wording change is a dated, attributed, diffable commit. A
+CMS field that somebody overwrote in March usually does not.
+
+**The fair counter-argument**, and it is real: hard-coded copy means a typo fix
+is a pull request and a deploy. If your deploy is slow or scary, that pushes
+people toward asking a developer to "just quickly change it", which is exactly
+the bottleneck the CMS was sold to remove. The answer is not to move the copy —
+it is to make the deploy cheap. Where the deploy is genuinely expensive and the
+copy genuinely changes weekly, put it in the CMS and accept the trade.
+
+**And check the exit before you check in.** The same week, one of us was scripting
+an export of a live theme out of a hosted video platform from the browser
+console, because the product has no download-theme button — even though the
+templates are Liquid, the same as Shopify. That generalises:
+
+> **Content you cannot export on demand is content you do not own.** Before you
+> put anything into a system, find the export path. If the answer is "we would
+> script it out of the console", you already know what leaving costs.
+
 ## Keeping a copy in sync: poll, webhook, or on demand
 
 Sara asked whether all this is the same as a nightly cron that already queries

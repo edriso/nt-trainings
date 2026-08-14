@@ -329,6 +329,59 @@ question: not "why did it write so much?" but "why did it write it like that?"
 And it is the same argument as everything else on this page — the cheapest place
 to fix output is upstream of producing it.
 
+## The chain of stale, and the agent that reads it
+
+Tom came back to all of this from a third angle a session later, and his version
+is worth writing down because it explains *why* drifted docs cost more now than
+they did five years ago:
+
+> "I have a lot of anxiety about any sort of non-DRY code for agents. It's like a
+> readme that points to a file that summarizes what the file does, that then has
+> a comment about what the code does. As soon as you modify the code, everything
+> else becomes stale — which risks the agent reading the readme and not the code
+> itself, and then doing something else somewhere else based on that."
+
+Four descriptions of one behaviour: the README, the summary file, the comment,
+and the code. Only the last one is true by construction. Change the code and the
+other three are wrong until somebody remembers them, and nobody does.
+
+A person reading a stale comment usually catches the mismatch, because the code
+is right underneath it. An agent handed a summary often does not read the code at
+all — the summary is *cheaper*, and it reads as authoritative. So the failure
+mode is not "it was misled about this file". It is **"it confidently changed a
+different file, based on a sentence somebody wrote in March"**.
+
+The rule falls straight out of that, and it is the DRY rule we already apply to
+code:
+
+> **Every fact about the code gets written down exactly once, as close to the
+> code as it can live.**
+
+Which in practice means:
+
+| Instead of | Do this |
+| --- | --- |
+| A README section summarising what a module does | Nothing. The module is the summary |
+| A doc listing the folder structure | Nothing. It is derivable, and it is the first thing to rot |
+| A comment restating the function name | Delete it |
+| The same rule pasted into three repos' `CLAUDE.md` | One shared file, imported or shipped in a plugin |
+| "If you edit this feature, read its docs" | A rule scoped to that feature's paths, so it loads by itself |
+
+That last row is the mechanism, and it is the one nobody in the room had used.
+The near-miss guess was *"another markdown file that tells Claude write the code
+this way"*, and the missing half is that it attaches to **file paths** rather than
+to prompts. A rule scoped to `css/**` loads when something under `css/` is
+touched and costs nothing on every other task. It is deterministic in a way
+"remember to read the docs" never is, which was the whole point. The mechanics,
+including the gotcha where those rules silently drop out after a `/compact`, are
+in [Claude GOAT](https://edriso.github.io/claude-goat/docs/claude-md).
+
+The exception is the one this whole lesson defends: a fact that is **not**
+derivable from the code — why the obvious approach fails here, which unit the
+number is in, what the vendor API does wrong. Write that once, next to the thing,
+and keep it forever. Everything else you write down is a second copy of something
+that already exists, and second copies are what go stale.
+
 ## What we are changing
 
 **Where the scaffolding is.** Our worst offender is a large, heavily generated

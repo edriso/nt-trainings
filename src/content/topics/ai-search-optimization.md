@@ -2,7 +2,7 @@
 title: AI Search — AEO & GEO
 description: How to stay findable as search shifts from ten blue links to AI-generated answers.
 emoji: ✨
-order: 30
+order: 31
 status: up-next
 tags: [seo, aeo, geo]
 resources:
