@@ -35,6 +35,15 @@ resources:
   - title: "Creating a commit with multiple authors — GitHub Docs"
     url: https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
     note: The rule that decides whether a Co-authored-by trailer counts as a contribution.
+  - title: "Share items — 1Password"
+    url: https://support.1password.com/share-items/
+    note: How to send a credential as an expiring link limited to one person, instead of pasting it into chat.
+  - title: One Time Secret
+    url: https://onetimesecret.com/
+    note: A link that dies on first read. The right way to hand over a key you are about to rotate.
+  - title: "Token expiration and revocation — GitHub Docs"
+    url: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/token-expiration-and-revocation
+    note: What actually happens to a revoked token, and why "rotated" means nothing until the old one stops working.
 ---
 
 ## The one rule to remember
@@ -249,6 +258,55 @@ Two related habits, while we are on identity:
   without your finger.
 - **Never push to the default branch.** Not a security control exactly, but it
   is the one that makes a compromised session obvious instead of invisible.
+
+## Rotating a key is a job, not a button
+
+Everything above is about a key nobody can steal. This section is about the day you
+have to assume one *was* stolen — or a vendor rotates on you — because that day
+arrived in session 17 and it went the way it usually goes.
+
+The dev key had been rotated. Production had not, because the vendor has to do it
+manually on their end. And the person who had built a spike against that API the week
+before found out mid-standup:
+
+> "Since we are using those, I have to check to confirm — but if you rotated it, I
+> have to change it on the environment as well."
+
+Rotating a secret is three separate jobs, and only the first one is a button:
+
+1. **Issue the new one.** Fast, and the only part most people plan for.
+2. **Find every consumer.** Local `.env` files, staging, production, CI secrets, a
+   serverless function's environment, a teammate's machine, the one script somebody
+   runs by hand. This is the part that takes the time, and it is the part nobody can
+   do for you — which is why it is worth keeping a written list of where each
+   credential is used *before* you need it.
+3. **Retire the old one, deliberately.** If the old key still works, you have not
+   rotated anything; you have issued a second key. Overlap on purpose, for a stated
+   window, then revoke — and check the logs during the overlap to catch a consumer
+   you missed.
+
+A detail from the same exchange that is easy to skip past: before anyone could rotate
+anything, there was a genuine "which key are we talking about?" moment — the platform
+had a publisher API *and* a newer headless API with its own SDK, and the answer
+changed depending on which one was meant. **Name the credential, not the vendor.**
+"The API key" is not a name; `PUBLISH_API_KEY (staging)` is.
+
+### Handing a secret to a teammate
+
+The mechanics matter, and the fix is easy. Do not paste a credential into chat. Chat
+is searchable, it is backed up, and it outlives the reason you sent it — so a key
+pasted today is a key sitting in an archive next year. The move made here was the
+right one: *"I'll just one-time secret it to you."*
+
+| Method | Verdict |
+| --- | --- |
+| Shared password manager entry | **Best for anything long-lived.** One source of truth, and rotation updates one place. [1Password item sharing](https://support.1password.com/share-items/) gives a link that can expire and be limited to one recipient. |
+| One-time secret link ([onetimesecret.com](https://onetimesecret.com/)) | **Good for a handoff.** The link dies on first read, so a leaked link is usually a *detected* leak — the recipient telling you it was already opened is the alarm. |
+| Chat, email, a ticket comment | **No.** Permanent, searchable, and copied into every backup and export. |
+
+The vault is where the secret *lives*; the one-time link is only how it *travels*. If
+a credential exists solely in a chat message somebody starred, it is not stored, it
+is remembered.
 
 ## Field notes from our repos
 

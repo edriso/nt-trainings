@@ -158,6 +158,11 @@ it breaks for the person least able to fix it. Doing it by hand this time also
 tells you what the tool would need to do — and if it happens a third time, build
 it then, from real requirements instead of guessed ones.
 
+Session 17 took that argument further, when the same question came back as "should we
+build the client a configurator app?". The answer that won was to write the answers
+down first and let the real questions specify the tool:
+[Docs Before the App](docs-before-the-app).
+
 ## What a real import taught us
 
 **The scale we are actually working at.** Around 12,000 products came in from the
@@ -178,6 +183,28 @@ instead of code.
 Practical habit from that: after any bulk import, count. How many products should
 have this metafield, how many do? A one-line count catches a class of bug that
 reading code does not.
+
+**Export a backup first, then diff the two exports.** Before regenerating around
+70,000 customizer configurations in session 17, the current products were exported as
+a backup — so there were two full versions to compare. That comparison is where the
+real finding came from: **about 4,000 products got a configuration for the first
+time**, because old order-comment and radio-button data had made the configurator
+skip them on the earlier run.
+
+Nobody predicted that number. It fell out of diffing the before and after.
+
+Two habits from that, both cheap:
+
+- **The export is a rollback plan and a measurement, in one file.** Even if you never
+  restore it, it is the only way to answer "what actually changed?" after a bulk
+  write. Do it even when you are confident, especially when you are confident.
+- **Diff the data, not the script.** The same argument as "QA the import, not the
+  script" above, one level up: comparing two exports tells you what the run *did*,
+  where reading the generator only tells you what it was *meant* to do.
+
+The follow-up matters too — 30 deliberately differently-structured products were
+tested by hand afterwards, which is what turned "the diff looks right" into "these
+product types work".
 
 **Tags are already on everything.** Our imports tagged every product for
 collection matching. Adding filter metafields is additive — new definitions

@@ -341,6 +341,11 @@ worse review — it gets a *fake* one. Nobody reads it. They skim, they approve,
 the second-person-understands-the-change step silently did not happen. If your
 change is genuinely big, that is exactly what stacked PRs are for.
 
+Session 17 supplied the extreme version: an 800-file refactor that its own author
+closed unreviewed. The techniques for getting the same result in pieces a reviewer can
+accept — and the rule that a big *change* need not be a big *pull request* — are in
+[Refactoring in Small Steps](refactoring-in-small-steps).
+
 Corollary worth saying out loud: if a review comment needs three paragraphs, the
 problem is usually not the comment. Either the change is too big, or the
 conversation belongs in a call.

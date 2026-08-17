@@ -47,6 +47,15 @@ resources:
   - title: "Making the world's fastest website, and other mistakes"
     url: https://dev.to/tigt/making-the-worlds-fastest-website-and-other-mistakes-56na
     note: The famous "Kroger case study" series. Long, funny, and full of lessons about speed vs value.
+  - title: CrUX methodology — Chrome for Developers
+    url: https://developer.chrome.com/docs/crux/methodology
+    note: The eligibility rules. Why a password-protected staging site will never appear in field data.
+  - title: CrUX API — Chrome for Developers
+    url: https://developer.chrome.com/docs/crux/api
+    note: 28-day rolling window, refreshed daily, reported at the 75th percentile. The three facts that explain every surprise.
+  - title: Page experience in Google Search
+    url: https://developers.google.com/search/docs/appearance/page-experience
+    note: Google's own hedging — "there is no single signal", and relevance still wins over speed.
 ---
 
 ## The one rule to remember
@@ -139,6 +148,80 @@ A simple repeatable flow:
 
 Remember the score is weighted: a few metrics carry most of the points. Focus on the
 metric that is actually failing, not on chasing 100.
+
+## Checking a site you have no access to
+
+Field data is **public**. You can read the real-user performance of a competitor's
+site — or a site you are about to rebuild, before you have touched anything —
+without any access to it at all. In session 17 someone pulled a live site up on
+[Treo](https://treo.sh/sitespeed) mid-call: *"this is what we're competing
+against."*
+
+The chain the data travels is worth knowing, because it explains every limitation
+you will run into:
+
+1. Chrome users who opted into usage reporting send their **real** metrics back.
+2. Google aggregates those into the **CrUX** dataset.
+3. The [CrUX API](https://developer.chrome.com/docs/crux/api) serves a **28-day
+   rolling average**, refreshed daily; [BigQuery](https://developer.chrome.com/docs/crux/bigquery)
+   publishes a **monthly** table on the second Tuesday of the following month.
+4. Every metric is reported at the **75th percentile** — the experience of the
+   unluckiest quarter of page loads, not the typical one.
+5. Treo and CrUX Vis are readable views over that same data. No tool has better
+   numbers than another; they all read from CrUX.
+
+Three things about this catch people out.
+
+**A staging site has no field data, and cannot get any.** CrUX needs the page to be
+[publicly discoverable](https://developer.chrome.com/docs/crux/methodology) — a
+non-200 status, an `X-Robots-Tag: noindex` header, or a `noindex` meta tag
+disqualifies it — *and* the origin needs a minimum number of real visitors, a
+threshold Google deliberately does not publish. A password-protected pre-launch site
+fails both tests at once, which is exactly what came up here: *"there's no way to get
+a version of the new one because it's password protected, and nobody's crawling it."*
+
+The practical consequence is a deadline: **if you want a before-and-after on public
+field data, capture the "before" while the old site is still live.** Once it is
+switched off, that history is only available for the origin, and only for as long as
+the dataset keeps it. Screenshot it, or pull the numbers into a note, on the day you
+start the project.
+
+The same lag applies at the other end. A relaunched site does not show up as a step
+change — the 28-day rolling window means a launch bleeds into the graph over about a
+month, and the monthly BigQuery table will not reflect a mid-month launch at all.
+Expect to wait before the good news is visible, and tell the client that before they
+ask.
+
+**You cannot subtract percentiles.** The dashboard on screen showed **TTFB 4.6 s**
+and **LCP 4.1 s** for the same origin, which looks impossible — the first byte cannot
+arrive after the largest paint. It is not impossible, because each figure is an
+*independent* 75th percentile over a different set of page loads. The visits that
+produced the slowest quarter of TTFB are not the visits that produced the slowest
+quarter of LCP. Use each percentile to answer its own question, and never do
+arithmetic across two of them.
+
+**An all-green profile is not the same as a good site.** That same screen had
+TTFB 4.6 s, FCP 3.7 s and LCP 4.1 s all red, while **INP was 96 ms and CLS was
+0.00** — both comfortably green. That shape is common and it says something specific:
+*once the bytes arrive, the page is fine.* Nothing shifts around, interactions are
+fast, and the entire problem is getting a first response out of the server. That aims
+the work at hosting, caching and the CDN, not at JavaScript.
+
+The reverse case matters just as much. A store described in the same session as
+having "the worst theme I've ever seen" was **all green**. Core Web Vitals measure
+whether a page loads and responds well; they cannot see whether it is any good.
+Google says so itself on the
+[page experience](https://developers.google.com/search/docs/appearance/page-experience)
+page: there is *"no single signal"*, and Search *"always seeks to show the most
+relevant content, even if the page experience is sub-par."* Green vitals are table
+stakes, not a competitive advantage.
+
+One last reason to prefer the public dataset over your own dashboard at relaunch:
+**you do not control it.** As it was put in the session, *"it's a good use case to be
+able to point to a public graph and be like, see, this was when we launched."* A
+number a client can check without trusting your instrumentation is a stronger kind of
+evidence — the same argument as [Proving It Works](proving-it-works), scaled up from
+a pull request to a whole project.
 
 ## Performance is a trade-off, not a boolean
 

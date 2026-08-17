@@ -2,7 +2,7 @@
 title: Maintaining Live Sites
 description: What changes once a site is live — monitoring, safe deploys, and catching regressions before clients do.
 emoji: 🔧
-order: 30
+order: 32
 status: up-next
 tags: [maintenance, monitoring, deploys]
 resources:
@@ -160,6 +160,39 @@ instead.
 
 > **In a migration, make the reversible choice, and check that it really is
 > reversible before you rely on it.**
+
+## Session 17: the job that is red three times a day
+
+The clearest example yet of what "maintaining" actually means. Someone found a
+pricing data-sync workflow that had been failing on a schedule:
+
+> "Fixing the pricing data sync workflow — you'll find it goes red three times a day.
+> So I have made a PR for it."
+
+Two things are wrong in that sentence, and only one of them is the workflow.
+
+**A check that fails predictably has stopped being a check.** After the second or
+third red run, everyone learns to scroll past it, and the failure notification
+becomes furniture. The cost is not the broken sync — it is that the *next* real
+failure arrives in the same colour as the noise and nobody looks. This is alert
+fatigue, and it is the reason a permanently-red job is worse than no job at all.
+
+So the rule for anything scheduled:
+
+- **Red means act.** If a job is expected to fail, either fix it or turn it off and
+  open a ticket. "Known failing" is not a state a monitor supports.
+- **A scheduled job needs an owner, not just a schedule.** Three failures a day for
+  an unknown number of days means nobody's name was on it.
+- **Alarm on the symptom the business feels.** "The sync job exited non-zero" is a
+  developer's alarm; "prices are more than a day stale" is the one that matters, and
+  it stays useful even when someone changes how the sync runs.
+
+Related, from the same morning: **the forge was down**, which stopped peer reviews
+and blocked an issue cleanup. Worth noticing how much of a process assumes one vendor
+is reachable — and which parts survive an outage anyway. Reading a diff you have
+already pulled, running the test suite, and writing the pull request description all
+work offline. The [Code Review](code-review) queue does not, which is an argument for
+reviewing early in the day rather than saving it up.
 
 ## Until the session
 
