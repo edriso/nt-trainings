@@ -327,6 +327,15 @@ Everything on it is world-readable to anyone with the URL, and an unlisted URL i
 not a permission. Client screenshots with order data, customer names or
 unreleased pricing do not go there.
 
+## A QA bot is the obvious next step
+
+The shape people keep converging on: a bot that runs a headless browser against
+any pull request carrying a particular tag or checklist, adding a quality pass
+that CI does not do — screenshots included. Everything on this page is what would
+make its output trustworthy rather than decorative, and the table above is the
+ceiling on what it can prove. It is also the kind of thing to build *between*
+launches, not during one ([The Week Before Launch](the-week-before-launch)).
+
 ## Four things worth copying
 
 - **Open the template as a pull request, not as a commit.** A template is a

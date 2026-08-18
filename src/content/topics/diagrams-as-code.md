@@ -2,7 +2,7 @@
 title: Diagrams as Code
 description: Explaining a system to a client without opening a design tool — and keeping the diagram true six months later.
 emoji: 📐
-order: 29
+order: 31
 status: up-next
 tags: [documentation, diagrams, communication]
 resources:
@@ -33,6 +33,12 @@ fan-out hits every store — is already written down in
 it would land in one look. And if that picture is **text in the repository**, it
 gets reviewed in the pull request that changes the pipeline, instead of quietly
 going stale in someone's Slack history.
+
+Teams already do this without calling it that. One project we work on keeps a
+Mermaid file of known data gaps committed in the codebase — the team works *from*
+it, turning gaps into issues and ticking them off. That is the whole argument in
+one file: it diffs, it gets reviewed, and nobody has to ask who has the latest
+copy.
 
 ## What we would cover
 

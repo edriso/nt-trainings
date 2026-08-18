@@ -39,6 +39,11 @@ resources:
 That single line resolves the disagreement this session opened with, and it is
 worth having ready the next time someone asks "can't we just use tags?"
 
+This lesson is about getting data *in* and describing it well. What to do when the
+data that arrived is wrong — duplicates, typos and old naming conventions carried
+across from the previous platform — is
+[Bad Data Outlives the Migration](bad-data-outlives-the-migration).
+
 ## The question, and why both answers were right
 
 Sara brought it from the product manager, who was building collections and

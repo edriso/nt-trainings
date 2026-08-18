@@ -2,7 +2,7 @@
 title: Browsers, Profiles & Why Chrome Eats RAM
 description: Why the browser you develop in costs gigabytes, and how to hold ten client accounts open without them leaking into each other.
 emoji: 🪟
-order: 34
+order: 36
 status: up-next
 tags: [tooling, browsers, dev-environment]
 resources:

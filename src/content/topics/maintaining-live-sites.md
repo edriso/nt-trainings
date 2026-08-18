@@ -2,7 +2,7 @@
 title: Maintaining Live Sites
 description: What changes once a site is live — monitoring, safe deploys, and catching regressions before clients do.
 emoji: 🔧
-order: 32
+order: 34
 status: up-next
 tags: [maintenance, monitoring, deploys]
 resources:
@@ -30,6 +30,11 @@ resources:
 Building a new site and maintaining a live one are different jobs. On a live
 store every deploy touches real users and real money, and nobody files a ticket
 when things get *slowly* worse — you have to notice it yourself.
+
+The week *before* day one has its own rules, and its own lesson:
+[The Week Before Launch](the-week-before-launch) covers what can honestly be
+measured on a site that is still behind a password, and what has to wait until the
+tags are live.
 
 ## What we will cover
 

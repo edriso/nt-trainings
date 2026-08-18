@@ -181,7 +181,9 @@ fails both tests at once, which is exactly what came up here: *"there's no way t
 a version of the new one because it's password protected, and nobody's crawling it."*
 
 The practical consequence is a deadline: **if you want a before-and-after on public
-field data, capture the "before" while the old site is still live.** Once it is
+field data, capture the "before" while the old site is still live.** (What you
+*can* still measure on that password-protected site is
+[The Week Before Launch](the-week-before-launch).) Once it is
 switched off, that history is only available for the origin, and only for as long as
 the dataset keeps it. Screenshot it, or pull the numbers into a note, on the day you
 start the project.
