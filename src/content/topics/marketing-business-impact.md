@@ -210,6 +210,25 @@ Two practical rules:
 - **Compare like with like over time.** One tool, one attribution setting, week
   over week. Switching tools mid-argument makes every trend meaningless.
 
+## Field notes
+
+- **The weekly table is a real habit, not a theory.** On the accounts we
+  maintain, someone keeps exactly the revenue / users / conversion-rate view
+  described above and posts it every week. Worth copying rather than inventing:
+  as a build moves from net-new into maintenance, that table is how anyone
+  notices a regression no error tracker will catch.
+- **Internal decks age faster than the argument they make.** A 2023 deck we still
+  reference argued that paid-ad cost and organic rank are both tied to Core Web
+  Vitals. The argument holds — via landing page experience, not via a site-wide
+  score — but the metrics it names have moved on: First Input Delay has been
+  replaced by [Interaction to Next Paint](https://web.dev/articles/inp). Take the
+  reasoning from a deck and re-check every number against web.dev.
+- **Budget is not the same as scope.** A budget originally spread over three
+  months, compressed into one, is the same work with better cash flow for the
+  client — and it can open the door to expansion rather than closing it. When a
+  client shortens a timeline, the interesting question is which of the two they
+  are actually optimising.
+
 ## Try it yourself
 
 1. Open the [GA4 demo account](https://support.google.com/analytics/answer/6367342), go to Acquisition, and compare Paid Search with Organic Search. Which produces more revenue *per session*? Now write the one sentence you would send a client about it.

@@ -52,6 +52,12 @@ Things a developer can check on any site:
 None of these are exotic — they are just good HTML. That is the secret: most
 technical SEO is writing the HTML we should be writing anyway.
 
+The last three items decay quietly as a site grows, and each has a way of going
+wrong that is worth knowing in detail —
+[Technical SEO Hygiene & Crawl Budget](technical-seo-hygiene) covers redirects,
+`robots.txt` and canonicals properly, plus how to spot-check a site on a
+schedule.
+
 ## Structured data (schema markup)
 
 Structured data is a bit of JSON you put in the page that tells search engines, in

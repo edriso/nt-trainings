@@ -390,6 +390,30 @@ The failure mode to avoid is treating every change as a big swing. That is where
 the twelve-person alignment call comes from — and it is how a program ends up
 with two carefully-argued tests a year and no idea whether either worked.
 
+## Field notes
+
+- **The planner is public:**
+  [notambourine.com/experiment-velocity](https://notambourine.com/experiment-velocity).
+  The scenario used throughout this lesson is its illustrative default — 250k
+  sessions, $85 AOV, 2.9% purchase conversion. Put real numbers in before quoting
+  any of it to anyone.
+- **The first experiment queue is usually already built.** On one product page we
+  maintain, the image gallery encodes four or five choices nobody ever measured:
+  images load down one side with a load-more button, and the sidebar scrolls with
+  the page. Each alternative is a one-line branch on code that already exists —
+  auto-expand the gallery, show two images instead of many, freeze the sidebar.
+  That is the textbook case for the non-inferiority question: cheap, reversible,
+  already built, and shipped for reasons other than a proven lift. Go looking for
+  those before you write anything new.
+- **The bucket function is the whole platform.** `bucket = f("experiment-name")`
+  returning a sticky 0 or 1, plus the exposure event. Under 1 KB, synchronous, in
+  the `<head>`, with a URL-parameter override for QA. Details and naming
+  conventions are in [A/B Testing & CRO](ab-testing). You do not need to buy a
+  platform to get this.
+- **The realistic constraint on a small team is one lane per site.** Which, per
+  the arithmetic above, means the choice of lens is not a statistical nicety — it
+  is the difference between roughly 8 decisions a year and roughly 25.
+
 ## Try it yourself
 
 1. Open the [velocity planner](https://notambourine.com/experiment-velocity), enter a real store's monthly sessions and AOV, and change only the decision metric. Write down the days for the purchase lens and for one lens above it. What would you have to believe for the faster lens to be a fair decision?

@@ -72,6 +72,10 @@ Two lessons hide in this table:
 And if someone claims a 100% win rate, they are not testing anything they were
 unsure about — which means they are not learning anything.
 
+How a team *reacts* to each of those three rows is what decides how many tests it
+manages to run in a year — that is the subject of
+[Experimentation Velocity](experimentation-velocity).
+
 ## Choosing what to test: RICE
 
 With a backlog of 100 ideas, which do you test first? A common scoring model is
@@ -183,6 +187,11 @@ generalize:
 Rules of thumb for the calendar: **always run full weeks** (weekend shoppers
 behave differently from Tuesday shoppers), one to two weeks is the sweet spot,
 and past four weeks everyone stops caring about the test — including you.
+
+There is a second lever besides the metric, and it is bigger than most teams
+realise: **change the question.** Asking "is B not meaningfully *worse* than A?"
+instead of "is B *better* than A?" can cut the traffic needed by an order of
+magnitude — see [Experimentation Velocity](experimentation-velocity).
 
 ## Things that make tests trustworthy
 

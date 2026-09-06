@@ -357,6 +357,34 @@ had gone to sleep. Not because it was expected to break, but because if it did,
 the people who would page us would not be watching. Timing is a free lever on any
 change whose blast radius you cannot fully predict.
 
+## Field notes from real audits
+
+Four findings from one afternoon of crawling live stores, so the advice above has
+something concrete behind it:
+
+- **Every product image blocked, on a store we had just built.** A `robots.txt`
+  rule disallowing query-string URLs — added deliberately to protect crawl
+  budget — matched the image URLs too, so nothing could be indexed in image
+  search. The first fix was not the rule: it was moving the robots rules **out of
+  the site-builder's visual editor and into the theme** (on Shopify, that is
+  `robots.txt.liquid`), so the file lives in git, shows up in a diff, and gets
+  reviewed like code. Fix reviewability first; the rule itself is a one-liner
+  after that.
+- **A pile of internal 301s and 302s off one homepage.** Not broken pages —
+  stale `href`s. This is the "fix the link, not the redirect" ticket class, and
+  it makes a good first pull request for anyone new to a codebase.
+- **A crawl that stopped at the first URL.** The seed was the apex domain, which
+  redirects to `www`; the crawler reported the entered domain as non-indexable
+  and went no further. Crawl the canonical hostname, or the report is empty for
+  the wrong reason.
+- **Some robots questions have a true answer, and some are preference.** Block
+  it, or canonical it? Both can be defensible. Do not go heavy on robots edits
+  alone — get a second opinion from whoever owns SEO before shipping one.
+
+On tooling budget: one shared licence is plenty for occasional visual runs, with
+open-source tools doing anything you want automated. The free tier is enough to
+learn every concept in this lesson.
+
 ## Try it yourself
 
 1. **Trace a redirect chain.** Pick any short link or old URL you have around and run
