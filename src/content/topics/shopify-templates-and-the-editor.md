@@ -186,6 +186,43 @@ is not the same test as "does the page load?", and only the first one tells you
 whether the handoff works. Cheapest place to catch it is whoever builds the
 template, on the day they build it.
 
+**Should the header read the store menu?** A developer noticed that the theme's
+header component does not pull its links from the Shopify store navigation at all:
+
+> "Because promo title is connected to the header, I saw that in our header
+> component we're not actually pulling the data from the menu in our Shopify store.
+> So maybe we can take a look and do a rework of that… it's going to be easier for
+> other stores that we're going to build. It's going to be automatic."
+
+The reply is the part worth recording, because it is the honest answer to most
+"why don't we just…" questions on a mature codebase:
+
+> "I think that is a good idea. I want to say somebody looked into using the menu
+> to drive the actual navigation. I don't remember why we decided not to. There were
+> several differences on desktop versus mobile, and I don't know, it's something to
+> look into."
+
+Both people are right, and the disagreement is not really about navigation:
+
+| For reading the store menu | For keeping it in the theme |
+| --- | --- |
+| The client edits navigation in the admin, with no deploy and no ticket | Desktop and mobile genuinely differ, and a flat menu tree cannot express "these four become an accordion below 768px" |
+| It ports to the next store for free, which is the whole argument in [Design Tokens](design-tokens) | Mega-menu promos carry images and copy that a menu item has no field for |
+| One source of truth instead of two lists that drift | Somebody already tried it and stopped, for reasons nobody wrote down |
+
+That last cell is the actionable one. **A decision nobody recorded gets re-litigated
+every six months**, and each re-litigation costs the same hour. Before anyone
+reworks the header, the cheap move is to find out what stopped it last time — and
+whatever the answer, write it into the repo this time. The same argument, at
+lesson length, is in [Don't Delete What You Didn't Create](deleting-what-you-didnt-create):
+before you remove the fence, find out who built it.
+
+The middle ground that usually wins on Shopify: read the **link list** from the
+store menu for structure, and keep the presentation decisions (breakpoint
+behaviour, promo blocks, images) in section settings the merchant edits in the
+theme editor. You get the automatic part without pretending a menu tree is a
+design system.
+
 ## Try it yourself
 
 1. Open **Online Store → Pages →** any page → **Theme template**. Count the

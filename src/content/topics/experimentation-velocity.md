@@ -7,6 +7,10 @@ status: learned
 session: 11
 date: 2026-08-07
 tags: [ab-testing, experimentation, decision-making]
+decks:
+  - title: Experiment velocity planner — the 14-day run (August 2026)
+    file: experimentation-velocity-2026-08.pdf
+    note: A saved run of our own planner with the duration pinned at 14 days. Eight pages, and the annual result on page 6 is the reason it is here. The tool is live, so re-run it rather than quoting these figures.
 resources:
   - title: Experiment velocity planner — NoTambourine
     url: https://notambourine.com/experiment-velocity
@@ -365,6 +369,61 @@ end". That artefact — the **planning statement** — is the deliverable:
 Write that sentence before a test starts and most of the arguments described at
 the top of this lesson never happen.
 
+## Somebody ran exercise 2, and the answer was no
+
+The second exercise at the bottom of this page asks you to pin the duration at 14
+days and let the planner calculate the acceptable loss instead. Somebody did it,
+and saved the output — it is the deck attached to this lesson. It is worth a
+section of its own, because the planner answers honestly and the honest answer is
+a refusal.
+
+Same illustrative store, same decision metric, same 90% evidence bar. The only
+thing that moved is which two of the three numbers were pinned:
+
+| | Pin the margin at 5% | Pin the duration at 14 days |
+| --- | --- | --- |
+| Decision duration | 41 days | **14 days** |
+| Acceptable loss | 5% relative (0.15pp) | **10% relative (0.29pp)** |
+| Completed decisions in a year | 8 | **16** |
+| Harmful releases prevented | 2 | **0** |
+| Median business impact | **+$36k** | **−$391k** |
+| Likely range (P10–P90) | −$156k to +$261k | −$1.1M to +$184k |
+
+Doubling the margin delivered exactly what it promised — twice the decisions, on
+the same traffic and the same ideas — and the model prices that at roughly
+**$391k a year**.
+
+Three things worth taking from it.
+
+**The speed had already run out.** 14 days is the floor on this store: you run
+whole weeks, so no lens and no margin goes below it. Which means the second half
+of the margin bought nothing at all. The planner would have reached 14 days at
+some tighter number and then kept accepting loss for free. Whenever you pin a
+duration, check whether you have pinned it *at the floor* — if you have, the
+margin it hands back is the largest one the arithmetic will let it print, not the
+one you need.
+
+**"Harmful releases prevented: 0" is the entire explanation.** On the 5% run that
+same card read 2. A 10% relative margin on a 2.9% conversion rate is not a
+guardrail, it is a door: a change now has to be close to catastrophic to fail a
+test that has agreed in advance to tolerate losing a tenth of purchases. This is
+the biocreep section above, except nothing has accumulated yet. One margin, set
+once, too wide.
+
+**Read the band, not the point.** Both runs cross zero, which is the model being
+candid about its own uncertainty rather than a reason to dismiss it. But the
+shapes are not the same: the 5% run's downside is −$156k and the 10% run's is
+−$1.1M. Widening the margin did not just move the median, it opened the floor
+under it. Page 6 of the deck shows this better than any number does — the two
+median lines barely separate, and the pink uncertainty band around the faster
+policy fans out until it is most of the chart.
+
+And then the part that is actually about us rather than about statistics. Nobody
+in a planning meeting says *"let's accept a 10% conversion loss on every change we
+ship"*. They say *"can we decide in two weeks instead of six"*. Those are the same
+sentence. Getting them onto one screen, before the quarter starts rather than
+after it, is the whole job of the planner.
+
 ## The counter-argument worth keeping
 
 The strongest case against velocity-first is the **local maximum**, and it is a
@@ -417,6 +476,6 @@ with two carefully-argued tests a year and no idea whether either worked.
 ## Try it yourself
 
 1. Open the [velocity planner](https://notambourine.com/experiment-velocity), enter a real store's monthly sessions and AOV, and change only the decision metric. Write down the days for the purchase lens and for one lens above it. What would you have to believe for the faster lens to be a fair decision?
-2. In the same planner, fix duration at 14 days and let it calculate the acceptable loss. Is that margin one you would actually sign your name to? If not, you have just learned something about the traffic you have.
+2. In the same planner, fix duration at 14 days and let it calculate the acceptable loss. Write the margin down *before* you open the attached deck, then compare. Is it one you would sign your name to? If not, you have just learned something about the traffic you have.
 3. Do the biocreep arithmetic on paper: five consecutive changes, each 2% worse, on a 2.9% purchase conversion and $85 AOV at 250,000 sessions a month. How much annual revenue disappeared while every single test "passed"?
 4. Take one ticket in your current sprint and write its planning statement in the planner's format — metric, evidence threshold, margin, days. If you cannot name the margin, that is the conversation to have before you build it.
