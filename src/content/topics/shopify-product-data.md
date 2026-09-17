@@ -223,6 +223,54 @@ was the right call.
 open in the theme editor, that is a different problem entirely and it is written
 up in [Shopify Templates](shopify-templates-and-the-editor).
 
+**The customizer with no single source of truth.** Asked what made one store
+harder than the others, the developer who knew it best named the data rather than
+the code:
+
+> "The most complex part about the customizer is actually the source of data,
+> because we're not having one place for customizer data. We're actually having
+> multiple meta objects, multiple file references, one main customizer meta field,
+> and like 50 other meta fields that are used."
+
+Another developer's version from the same conversation: *"we have an app and a
+customizer engine and asset mappings and a lot of meta fields."* That shape has
+three consequences:
+
+- **Onboarding cost is a data cost, not a code cost.** What a new person has to
+  learn is not the engine, it is *where each piece of data lives*. A diagram of the
+  sources pays for itself in a week — see [Diagrams as Code](diagrams-as-code).
+- **"It is unused" is a weaker claim here than elsewhere**, because a reference may
+  be assembled at runtime from three places. That is the argument in
+  [Don't Delete What You Didn't Create](deleting-what-you-didnt-create).
+- **Giving the data a single editor is the next best thing to a single home.** The
+  team's mitigation was a small internal Shopify app for changing it.
+
+**Definitions are code, entries are content, and they move on different
+schedules.** When two developers asked whether to start importing products,
+collections and metaobject entries to unblock tickets, the answer was yes, with a
+reason:
+
+> "The metafields should already all be created because of the metafields CI/CD
+> process, and then the content delta upload can be after the fact too. The sooner
+> we can get it somewhat stable for them to get in and start uploading content in
+> the theme editor the better, and products are a blocker to that."
+
+That split is worth making on every store:
+
+| Layer | Who owns it | When it moves |
+| --- | --- | --- |
+| Metafield and metaobject **definitions** | The dev team, through CI/CD | On deploy, repeatably |
+| **Products and collections** | Import, early | As soon as possible — they block everything downstream |
+| **Content values** (the delta upload) | The client, in the admin | Last, and continuously after |
+
+The reason to import products early is not that they are ready. It is that
+everything else is blocked until they exist. A store the client can log into and
+start filling is worth more than a store with perfect data and nothing in it.
+
+**Budget for the app.** A metafields management app licence is a real monthly line
+item and it is bought per store. Name it in the estimate rather than discovering it
+at import time.
+
 ## Try it yourself
 
 1. Open any collection page on a store you work on and look at the filters. For

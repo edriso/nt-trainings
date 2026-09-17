@@ -2,7 +2,7 @@
 title: Browsers, Profiles & Why Chrome Eats RAM
 description: Why the browser you develop in costs gigabytes, and how to hold ten client accounts open without them leaking into each other.
 emoji: 🪟
-order: 36
+order: 41
 status: up-next
 tags: [tooling, browsers, dev-environment]
 resources:
@@ -72,6 +72,11 @@ solves the same problem per **tab** — each container has its own cookie jar, s
 can be signed into ten Shopify admins in one window, colour-coded, with no
 cross-contamination. It is an official Mozilla extension, and it is the single best
 answer to Zachary's question.
+
+**The rest of the machine.** Browser RAM is one line item; the dev environment is
+the other, and the WSL and Docker side of that is already written up in
+[Works on My Machine](works-on-my-machine). Worth reading together, because "my
+laptop is slow" is usually two separate bills.
 
 **The part that is our own fault.** Sometimes the memory is not the browser, it is
 the page — and on a Shopify theme with a stack of apps installed, that is worth

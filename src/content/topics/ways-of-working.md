@@ -2,7 +2,7 @@
 title: Ways of Working
 description: Grooming, discovery, spikes, PR reviews and release rhythm — the shared vocabulary a team needs to stop talking past each other.
 emoji: 🧭
-order: 33
+order: 38
 status: up-next
 tags: [process, agile, code-review]
 resources:
@@ -74,6 +74,10 @@ The definitions are free; the plan is the work. Open questions to land:
    builds it?
 3. **Who needs to be in refinement,** and how far ahead do we keep the backlog
    ready — one sprint, two, or just "the next few things"?
+4. **What a "story point" is for.** This one already has its own lesson:
+   [Sizing Is for Cutting Scope](sizing-is-for-cutting-scope) covers where the
+   1, 2, 3, 5, 8, 13 scale came from, why the Scrum Guide never mentions it, and
+   the one use of it that its own inventor would not object to.
 
 ## Small PRs, small review comments
 
