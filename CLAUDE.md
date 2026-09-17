@@ -31,7 +31,7 @@ shell that renders them.
 ```
 src/
   content/topics/*.md   ← THE CONTENT. One file = one topic. Add a file, done.
-  lib/topics.ts         ← loads all topic files at build time, parses frontmatter (yaml)
+  lib/topics.ts         ← topic metadata (eager) + lesson bodies (lazy, one chunk each)
   components/           ← Layout, TopicCard, Markdown renderer, VideoEmbed, ResourceList, DeckList
   pages/                ← Home (topic grid), TopicPage (lesson), NotFound
   index.css             ← Tailwind v4 theme tokens + .prose styles for lesson Markdown
@@ -52,6 +52,13 @@ Key decisions (do not undo them casually):
 - **System fonts only, lazy-loaded lesson page.** This site teaches performance;
   it should stay fast. Check bundle sizes in the build output when adding
   dependencies, and prefer no new dependencies at all.
+- **Lesson prose is never in the home-page bundle.** `vite.config.ts` has a
+  small `topic-frontmatter` plugin that serves `<topic>.md?meta` as the parsed
+  frontmatter only. `lib/topics.ts` loads that eagerly (the home page lists every
+  topic) and the bodies lazily, so each lesson is its own chunk. Two consequences
+  worth knowing: adding a topic is still just adding a file, and **malformed
+  frontmatter now fails the build** with a filename and line number instead of
+  throwing at module load and blanking the whole site.
 
 ## How to add a topic (THE RULE)
 
