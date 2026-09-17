@@ -1,15 +1,33 @@
 import { ArrowLeft, BookOpen, CalendarDays, PlayCircle, Presentation } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { DeckList } from '../components/DeckList'
 import { Markdown } from '../components/Markdown'
 import { ResourceList } from '../components/ResourceList'
 import { VideoEmbed } from '../components/VideoEmbed'
-import { getTopic } from '../lib/topics'
+import { getTopic, getTopicContent } from '../lib/topics'
 import { NotFound } from './NotFound'
 
 export function TopicPage() {
   const { slug } = useParams()
   const topic = slug ? getTopic(slug) : undefined
+
+  // The lesson body is its own chunk, so the home page never downloads it.
+  const [content, setContent] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!topic) return
+
+    let active = true
+    setContent(null)
+    getTopicContent(topic.slug).then((text) => {
+      if (active) setContent(text)
+    })
+
+    return () => {
+      active = false
+    }
+  }, [topic])
 
   if (!topic) {
     return <NotFound />
@@ -43,44 +61,58 @@ export function TopicPage() {
         )}
       </header>
 
-      <Markdown>{topic.content}</Markdown>
+      {content === null ? (
+        <div
+          className="mt-10 animate-pulse space-y-4"
+          role="status"
+          aria-label="Loading the lesson"
+        >
+          <div className="h-4 w-11/12 rounded bg-zinc-200 dark:bg-zinc-800" />
+          <div className="h-4 w-full rounded bg-zinc-200 dark:bg-zinc-800" />
+          <div className="h-4 w-9/12 rounded bg-zinc-200 dark:bg-zinc-800" />
+        </div>
+      ) : (
+        <>
+          <Markdown>{content}</Markdown>
 
-      {topic.decks && topic.decks.length > 0 && (
-        <section className="mt-12">
-          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-            <Presentation size={22} className="text-accent" />
-            Slides
-          </h2>
-          <div className="mt-4">
-            <DeckList decks={topic.decks} />
-          </div>
-        </section>
-      )}
+          {topic.decks && topic.decks.length > 0 && (
+            <section className="mt-12">
+              <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+                <Presentation size={22} className="text-accent" />
+                Slides
+              </h2>
+              <div className="mt-4">
+                <DeckList decks={topic.decks} />
+              </div>
+            </section>
+          )}
 
-      {topic.videos && topic.videos.length > 0 && (
-        <section className="mt-12">
-          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-            <PlayCircle size={22} className="text-accent" />
-            Watch
-          </h2>
-          <div className="mt-4">
-            {topic.videos.map((video) => (
-              <VideoEmbed key={video.youtubeId} video={video} />
-            ))}
-          </div>
-        </section>
-      )}
+          {topic.videos && topic.videos.length > 0 && (
+            <section className="mt-12">
+              <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+                <PlayCircle size={22} className="text-accent" />
+                Watch
+              </h2>
+              <div className="mt-4">
+                {topic.videos.map((video) => (
+                  <VideoEmbed key={video.youtubeId} video={video} />
+                ))}
+              </div>
+            </section>
+          )}
 
-      {topic.resources && topic.resources.length > 0 && (
-        <section className="mt-12">
-          <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-            <BookOpen size={22} className="text-accent" />
-            Go deeper
-          </h2>
-          <div className="mt-4">
-            <ResourceList resources={topic.resources} />
-          </div>
-        </section>
+          {topic.resources && topic.resources.length > 0 && (
+            <section className="mt-12">
+              <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+                <BookOpen size={22} className="text-accent" />
+                Go deeper
+              </h2>
+              <div className="mt-4">
+                <ResourceList resources={topic.resources} />
+              </div>
+            </section>
+          )}
+        </>
       )}
     </div>
   )

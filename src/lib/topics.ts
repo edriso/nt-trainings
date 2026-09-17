@@ -1,5 +1,3 @@
-import { parse } from 'yaml'
-
 /** A video that gets embedded at the end of a lesson. */
 export type TopicVideo = {
   title: string
@@ -49,37 +47,56 @@ export type TopicMeta = {
 export type Topic = TopicMeta & {
   /** URL part, taken from the file name: web-performance.md -> "web-performance" */
   slug: string
-  /** The lesson body as Markdown. */
-  content: string
 }
 
 /**
- * Load every .md file in src/content/topics at build time.
- * To add a new topic you only need to add a new file there — no code changes.
+ * Metadata for every topic is loaded eagerly, because the home page lists all
+ * of them. Lesson bodies are loaded one at a time, on demand.
+ *
+ * `?meta` is handled by the `topic-frontmatter` plugin in vite.config.ts: it
+ * parses the frontmatter at build time and returns only that, so none of the
+ * lesson prose reaches the home-page bundle. To add a topic you still only add
+ * a file to src/content/topics.
  */
-const files = import.meta.glob('../content/topics/*.md', {
-  query: '?raw',
+const metaFiles = import.meta.glob('../content/topics/*.md', {
+  query: '?meta',
   import: 'default',
   eager: true,
-}) as Record<string, string>
+}) as Record<string, TopicMeta>
 
-function parseTopic(path: string, raw: string): Topic {
-  const slug = path.split('/').pop()!.replace('.md', '')
+const bodyFiles = import.meta.glob('../content/topics/*.md', {
+  query: '?raw',
+  import: 'default',
+}) as Record<string, () => Promise<string>>
 
-  // Split the file into frontmatter (between the two "---" lines) and body.
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
-  if (!match) {
-    throw new Error(`Topic file "${slug}.md" is missing its frontmatter block.`)
-  }
-
-  const meta = parse(match[1]) as TopicMeta
-  return { ...meta, slug, content: match[2].trim() }
+/** web-performance.md -> "web-performance" */
+function slugFromPath(path: string): string {
+  return path.split('/').pop()!.replace('.md', '')
 }
 
-export const topics: Topic[] = Object.entries(files)
-  .map(([path, raw]) => parseTopic(path, raw))
+export const topics: Topic[] = Object.entries(metaFiles)
+  .map(([path, meta]) => ({ ...meta, slug: slugFromPath(path) }))
   .sort((a, b) => a.order - b.order)
 
 export function getTopic(slug: string): Topic | undefined {
   return topics.find((topic) => topic.slug === slug)
+}
+
+const bodyBySlug = new Map(
+  Object.entries(bodyFiles).map(([path, load]) => [slugFromPath(path), load]),
+)
+
+/**
+ * Fetches one lesson body, without the frontmatter block the build already
+ * parsed. Each topic is its own chunk, so this downloads one lesson's prose.
+ */
+export async function getTopicContent(slug: string): Promise<string> {
+  const load = bodyBySlug.get(slug)
+  if (!load) {
+    throw new Error(`No topic file for "${slug}".`)
+  }
+
+  const raw = await load()
+  const match = raw.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n?([\s\S]*)$/)
+  return (match ? match[1] : raw).trim()
 }
