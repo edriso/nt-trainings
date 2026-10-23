@@ -44,6 +44,15 @@ resources:
   - title: "Token expiration and revocation — GitHub Docs"
     url: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/token-expiration-and-revocation
     note: What actually happens to a revoked token, and why "rotated" means nothing until the old one stops working.
+  - title: Security disclosure, 21 October 2026 — Railway
+    url: https://blog.railway.com/p/security-disclosure-wednesday-october-21st
+    note: A real platform breach from October 2026. Short, and a good model of what a vendor disclosure should ask you to do.
+  - title: Managing secrets on Railway
+    url: https://docs.railway.com/guides/managing-secrets-on-railway
+    note: Shared, reference and sealed variables. Explains why one shared-variable change reaches every service on its next deploy.
+  - title: Rotation strategies — AWS Secrets Manager
+    url: https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-strategy.html
+    note: Single-user versus alternating-users rotation. The second is how you rotate a database password with no gap.
 ---
 
 ## The one rule to remember
@@ -290,6 +299,59 @@ anything, there was a genuine "which key are we talking about?" moment — the p
 had a publisher API *and* a newer headless API with its own SDK, and the answer
 changed depending on which one was meant. **Name the credential, not the vendor.**
 "The API key" is not a name; `PUBLISH_API_KEY (staging)` is.
+
+### When the platform is the one that leaked
+
+Session 17 was one vendor rotating one key. Session 21 was the bigger version.
+On 21 October 2026, Railway, a popular app hosting platform, published a
+[security disclosure](https://blog.railway.com/p/security-disclosure-wednesday-october-21st):
+
+> "Railway detected anomalous activity involving systems that store customer
+> environment variables… we strongly recommend that you immediately roll all
+> environment variables."
+
+And in the same post: *"All deployments are paused while we investigate."*
+
+That pairing is the hard case, and it is worth understanding why. On Railway, a
+changed variable — including a shared one that services pull in as
+`${{ shared.API_KEY }}` — only reaches a service **on its next deploy**
+([Railway docs](https://docs.railway.com/guides/managing-secrets-on-railway)).
+So rotation needs a deploy, and the deploys were paused. The order of the steps
+decides whether you have an outage:
+
+1. **Create the new key at the provider. Leave the old one working.**
+2. **Update the variable on the platform.** With shared variables this is one
+   change for every service that references it — a real advantage on a day like
+   this.
+3. **Deploy, then prove each service is on the new key** — a test request, or,
+   where the provider shows one, the old key's "last used" time going quiet.
+4. **Only then revoke the old key.**
+
+Revoke at step 1 and every running service is still holding a dead key. Unless
+the key is being actively abused, that is downtime you chose. If it *is* being
+abused, revoking first and accepting the outage can be the right call — that is
+the expected-value trade-off from [The Cost of Being Wrong](the-cost-of-being-wrong),
+with a real cost on both sides.
+
+For credentials you control end to end, like a database user, you can avoid the
+gap entirely. AWS calls the pattern
+[alternating users](https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotation-strategy.html):
+two users are valid at all times, and each rotation changes the one that is not
+in use. AWS describes it as the strategy for applications that need high
+availability.
+
+Two more things the disclosure asked for, which are easy to skip under pressure:
+**rotate private registry credentials too** (the token your build uses to pull
+images or packages), and **read the service logs for unusual activity** during
+the exposure window. A rotation closes the door; the logs tell you whether
+anyone walked through it first.
+
+**Rehearse it before you need it.** A common story the morning after an incident
+like this: the main production credentials are reset, but rotating the shared
+ones through the CLI errors halfway, and a feature quietly breaks in the process.
+Nobody plans for the tool path to fail mid-incident. One calm practice rotation per project —
+using the written list of consumers from step 2 above — is how you find that out
+on a quiet Tuesday instead.
 
 ### Handing a secret to a teammate
 

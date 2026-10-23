@@ -378,6 +378,15 @@ automate them where we can.
   tickets instead, so the work goes through the team's queue. The first ticket
   came in the day before this session.
 
+**Two roll-forward calls from the same standup.** One engineer suggested handing
+two big pages to client QA for the UI check, even though some functionality was
+still pending — *"we shouldn't hold on the QA to that."* That is "a fix costs
+10%, a hold costs 100%" in practice: the UI review runs in parallel instead of
+queueing behind the last feature. In the other direction, a data migration script
+was merged to dev but deliberately **not yet executed**. Merging code is a
+two-way door; running a data migration is a one-way door, so it waits for its own
+careful step (more in [Bad Data Outlives the Migration](bad-data-outlives-the-migration)).
+
 **A note on the game examples.** The talk illustrated expected value with poker.
 This write-up keeps the math and uses work and chess examples instead — the
 break-even formula is the same whatever you plug into it.

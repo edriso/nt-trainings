@@ -1,8 +1,8 @@
 ---
 title: Diagrams as Code
-description: Explaining a system to a client without opening a design tool — and keeping the diagram true six months later.
+description: Explaining a system to a client without opening a design tool — and keeping the diagram (or the deck) true six months later.
 emoji: 📐
-order: 37
+order: 39
 status: up-next
 tags: [documentation, diagrams, communication]
 resources:
@@ -47,6 +47,14 @@ GitHub renders it natively in Markdown files, issues and pull requests, which
 means it diffs, it gets reviewed, and it lives next to the thing it describes. No
 export step, no "who has the source file", no diagram that still shows the
 architecture from March.
+
+**Slides are text too (added in session 21).** The
+[Cost of Being Wrong](the-cost-of-being-wrong) deck was written in Markdown and
+built with [Marp CLI](https://github.com/marp-team/marp-cli), styled from our
+brand kit. Same argument as Mermaid: the source diffs and gets reviewed, and one
+file exports to HTML, PDF, PowerPoint or images
+(`npx @marp-team/marp-cli slides.md --pdf`). Pointing an AI assistant at the
+brand kit produces slides in the same style.
 
 **Picking the right diagram for the audience.** This is the part that decides
 whether a client understands it, and it is where most diagrams fail — by showing
